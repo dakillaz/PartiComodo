@@ -1,4 +1,4 @@
 PartiComodo
 ===========
 
-Versione 2 di BusBook
+Versione 2 di BusBook.
