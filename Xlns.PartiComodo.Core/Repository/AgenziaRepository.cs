@@ -16,6 +16,11 @@
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        public void Save(Agenzia agenzia)
+        {
+            base.update<Agenzia>(agenzia);
+        }
+
         public IList<Agenzia> GetAllAgenzie(int maximumRows, int startRowIndex)
         {
             return base.getAll<Agenzia>(maximumRows, startRowIndex);

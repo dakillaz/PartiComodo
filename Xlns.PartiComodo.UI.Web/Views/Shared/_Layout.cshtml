@@ -47,19 +47,22 @@
                                     <li class="nav-header">Registrati subito!</li>
                                     <li class="divider"></li>
                                     <li><a href="#">@Html.ActionLink("Registrati", "Register", "Login", null, null)</a></li>
-                                    <li><a href="#">@Html.ActionLink("Repera Password", "ResetPassword", "Login", null, null)</a></li>
+                                    <li><a href="#">@Html.ActionLink("Recupera Password", "ResetPassword", "Login", null, null)</a></li>
                                 </ul>
                             </li>
+                        }
+                        else if (Session.IsLoggedAsAdmin()) { 
+                        <li>@Html.ActionLink("Amministrazione", "List", "Admin", null, null)</li>
                         }
                     </ul>
                     @if (!Session.IsLogged())
                     {
 
                         using (Html.BeginForm("Login", "Login", FormMethod.Post, new
-                    {
-                        id = "loginForm",
-                        @class = "navbar-form pull-right"
-                    }))
+                        {
+                            id = "loginForm",
+                            @class = "navbar-form pull-right"
+                        }))
                         { 
                         <input class="span2" type="text" name="email" placeholder="Email" />
                         <input class="span2" type="password" name="password" placeholder="Password" />

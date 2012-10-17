@@ -36,9 +36,21 @@
 
         #region HttpPost
         [HttpPost]
-        public ActionResult Register(RegisterViewModel viewModel)
+        public ActionResult Register(Agenzia agency)
         {
-            return View("Register");
+            if (ModelState.IsValid)
+            {
+                CryptoHelper cryptoHelper = new CryptoHelper();
+                agency.RagioneSociale = agency.Nome;
+                agency.PIva = "123456";
+                agency.Password = cryptoHelper.CryptPassword(agency.Password);
+                var ar = new AgenziaRepository();
+                ar.Save(agency);
+                Session.Login(agency);
+                return RedirectToAction("Index", "Dashboard", new { id = agency.Id });
+            }
+            else return View(agency);
+            
         }
 
         [HttpPost]

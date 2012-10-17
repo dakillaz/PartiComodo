@@ -11,7 +11,7 @@
 
     public class GeoLocation
     {
-        [Required]
+        
         [StringLength(50, ErrorMessage = "Il campo può essere lungo al massimo 50 caratteri")]
         [Display(Name = "Nazione")]
         public String Nation { get; set; }
@@ -24,7 +24,7 @@
         [Display(Name = "Provincia")]
         public String Province { get; set; }
 
-        [Required]
+        
         [StringLength(50, ErrorMessage = "Il campo può essere lungo al massimo 50 caratteri")]
         [Display(Name = "Città")]
         public String City { get; set; }
@@ -41,11 +41,10 @@
         [Display(Name = "CAP")]
         public String CAP { get; set; }
 
-        [Required]
+        
         [Display(Name = "Latitudine")]
         public String Lat { get; set; }
 
-        [Required]
         [Display(Name = "Longitudine")]
         public String Lng { get; set; }
 
