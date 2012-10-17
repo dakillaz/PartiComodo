@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Xlns.PartiComodo.Core.Model.Viaggio
+<div class="row">
+    <div class="span8">
+        <div class="row">
+            <div class="span4">
+            @using (Html.BeginForm("Save", "Viaggio", FormMethod.Post, new { id = "saveTripForm", enctype = "multipart/form-data" }))
+            {
+                
+            }
+            </div>
+            <div class="span4">
+            <img src="@Url.Content("~/Content/images/poster_mappa_italia.jpg")" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+    </div>
+</div>

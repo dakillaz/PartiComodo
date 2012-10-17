@@ -1,7 +1,7 @@
-﻿namespace Xlns.PartComodo.Core.Crypto
+﻿namespace Xlns.PartiComodo.Core.Crypto
 {
 
-    #region 
+    #region Namespaces
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,11 +11,13 @@
 
     public class CryptoHelper
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Effettua la criptazione della password sfruttando l'algoritmo di criptazione MD5
         /// </summary>
         /// <param name="password">Stringa da criptare di qualsivoglia lunghezza</param>
-        /// <returns>Stringa criptata in una stringa di 128 bit</returns>
+        /// <returns>Stringa criptata in una di 128 bit</returns>
         public string CryptPassword(string password)
         {
             try
@@ -26,7 +28,7 @@
                 for (int i = 0; i < hashPassword.Length; i++)
                     builder.Append(hashPassword[i].ToString());
                 var result = builder.ToString();
-                //logger.Debug("Password criptata con successo - hash = {0}", result);
+                logger.Debug("Password criptata con successo - hash = {0}", result);
                 return result;
             }
             catch

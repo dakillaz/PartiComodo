@@ -1,0 +1,44 @@
+﻿@model List<Xlns.PartiComodo.Core.Model.Viaggio>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Viaggio
+            </th>
+            <th>
+                Proposto da
+            </th>
+            <th>
+                Descrizione
+            </th>
+            <th>
+                Partenza il
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{foreach (var item in Model)
+          {
+            <tr>
+                <td>
+                    @Html.DisplayFor(c => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(c => item.Agenzia.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(c => item.Descrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(c => item.DataPartenza)
+                </td>
+                <td>
+                    @Html.ActionLink("Vedi dettaglio", "Details", "Viaggio", new { id = @item.Id }, new { @class = "btn" })
+                </td>
+            </tr>
+          }
+        }
+    </tbody>
+</table>

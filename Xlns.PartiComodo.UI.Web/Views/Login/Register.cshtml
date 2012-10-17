@@ -2,15 +2,109 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Xlns.PartiComodo.Core.Model.Agenzia
 <h2>
-    Registrati</h2>
-@using (Html.BeginForm("Register", "Login", FormMethod.Post))
-{
-    @Html.ValidationSummary(true)
-    <table>
-        <tr>
-            <td>
-            </td>
-        </tr>
-    </table>
-}
+    Non hai ancora un Account? Registrati subito e... Parti Comodo!!!</h2>
+<ul class="nav nav-tabs">
+    <li><a href="#touroperator" data-toggle="tab">Registra un Tour Operator</a></li>
+    <li><a href="#agency" data-toggle="tab">Registra un'Agenzia di Viaggi</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="touroperator">
+        <div class="row">
+            <div class="span6">
+                <h3>
+                    Modulo di registrazione Tour Operator</h3>
+                <p>@Html.LabelFor(model => model.Nome)
+                    @Html.EditorFor(model => model.Nome)
+                    @Html.ValidationMessageFor(model => model.Nome)</p>
+                <p>@Html.LabelFor(model => model.Email)
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)</p>
+                <p>@Html.LabelFor(model => model.Password)
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)</p>
+                <p>@Html.LabelFor(model => model.Location.City)
+                    @Html.EditorFor(model => model.Location.City)
+                    @Html.ValidationMessageFor(model => model.Location.City)</p>
+                <p>@Html.LabelFor(model => model.Location.CAP)
+                    @Html.EditorFor(model => model.Location.CAP)
+                    @Html.ValidationMessageFor(model => model.Location.CAP)</p>
+                <p>@Html.LabelFor(model => model.Location.Street)
+                    @Html.EditorFor(model => model.Location.Street)
+                    @Html.ValidationMessageFor(model => model.Location.Street)</p>
+                <p>@Html.LabelFor(model => model.Location.Number)
+                    @Html.EditorFor(model => model.Location.Number)
+                    @Html.ValidationMessageFor(model => model.Location.Number)</p>
+                    <p>
+                    <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
+                    </p>
+                <p>
+                    Cliccando su Registra, accetti i Termini e le Condizioni d'Uso di "Parti Comodo"
+                    e confermi di aver letto e compreso la nostra Normativa sull'utilizzo dei dati.
+                    Per maggiori informazioni leggi la nostra informativa cliccando sul pulsante Privacy
+                    Policy sottostante</p>
+                <p>
+                    <a href="https://www.iubenda.com/privacy-policy/362213" class="iubenda-white " id="iubenda-embed"
+                        title="Privacy Policy">Privacy Policy</a>
+                </p>
+            </div>
+            <div class="span4">
+                <h3>
+                    Perché registrarsi?</h3>
+                <p>
+                    Registra un Tour Operator per pubblicare e condividere le tue iniziative</p>
+                <img src="@Url.Content("~/Content/images/poster_mappa_italia.jpg")" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="agency">
+        <div class="row">
+            <div class="span6">
+                <h3>
+                    Modulo di registrazione Agenzia</h3>
+                <p>@Html.LabelFor(model => model.Nome)
+                    @Html.EditorFor(model => model.Nome)
+                    @Html.ValidationMessageFor(model => model.Nome)</p>
+                <p>@Html.LabelFor(model => model.Email)
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)</p>
+                <p>@Html.LabelFor(model => model.Password)
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)</p>
+                <p>@Html.LabelFor(model => model.Location.City)
+                    @Html.EditorFor(model => model.Location.City)
+                    @Html.ValidationMessageFor(model => model.Location.City)</p>
+                <p>@Html.LabelFor(model => model.Location.CAP)
+                    @Html.EditorFor(model => model.Location.CAP)
+                    @Html.ValidationMessageFor(model => model.Location.CAP)</p>
+                <p>@Html.LabelFor(model => model.Location.Street)
+                    @Html.EditorFor(model => model.Location.Street)
+                    @Html.ValidationMessageFor(model => model.Location.Street)</p>
+                <p>@Html.LabelFor(model => model.Location.Number)
+                    @Html.EditorFor(model => model.Location.Number)
+                    @Html.ValidationMessageFor(model => model.Location.Number)</p>
+                    <p>
+                    <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
+                    </p>
+                <p>
+                    Cliccando su Registra, accetti i Termini e le Condizioni d'Uso di "Parti Comodo"
+                    e confermi di aver letto e compreso la nostra Normativa sull'utilizzo dei dati.
+                    Per maggiori informazioni leggi la nostra informativa cliccando sul pulsante Privacy
+                    Policy sottostante</p>
+                <p>
+                    <a href="https://www.iubenda.com/privacy-policy/362213" class="iubenda-white " id="iubenda-embed"
+                        title="Privacy Policy">Privacy Policy</a>
+                </p>
+            </div>
+            <div class="span4">
+                <h3>
+                    Perché registrarsi?</h3>
+                <p>
+                    Registra un'Agenzia per promuovere e condividere le tue iniziative</p>
+                <img src="@Url.Content("~/Content/images/poster_italia.jpg")" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">    (function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; w.addEventListener ? w.addEventListener("load", loader, false) : w.attachEvent("onload", loader); })(window, document);</script>

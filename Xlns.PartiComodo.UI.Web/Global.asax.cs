@@ -24,10 +24,15 @@ namespace Xlns.PartiComodo.UI.Web
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Homepage", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
+
+        //protected void Session_Start()
+        //{
+        //    Session.setItemsPerPage(ConfigurationManager.Configurator.Istance.itemsPerPage);
+        //}
 
         protected void Application_Start()
         {
@@ -35,6 +40,10 @@ namespace Xlns.PartiComodo.UI.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            ConfigurationManager.Configurator.configFileName = AppDomain.CurrentDomain.BaseDirectory + @"Config\BusBook.config";
+
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

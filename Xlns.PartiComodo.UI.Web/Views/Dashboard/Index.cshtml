@@ -1,0 +1,35 @@
+﻿@model Xlns.PartiComodo.Core.Model.Agenzia
+<div class="row">
+    <div class="span8">
+        <h3>
+            @Model.Nome 's Dashboard</h3>
+        <h5>
+            Benvenuto, questa è la tua personale Dashboard. Da qui potrai gestire le tue iniziative,
+            crearne di nuove o semplicemente cercare nuovi partner commerciali per la tua attività.</h5>
+        <div class="row">
+            <div class="span4">
+                <img src="@Url.Content("~/Content/images/poster_verona.jpg")" alt="">
+            </div>
+            <div class="span4">
+                <p>
+                    Vuoi proporre una nuova iniziativa?</p>
+                <p>
+                    E' facile clicca sul pulsante e crea il tuo viaggio!</p>
+                <p>
+                    @Html.ActionLink("Crea una nuova Iniziativa", "Create", "Viaggio", null, new { @class = "btn btn-primary btn-large" })
+                </p>
+                <p>
+                    Visualizza le inziative da te pubblicate</p>
+                <p>
+                    E' facile clicca sul pulsante!</p>
+                <p>
+                    @Html.ActionLink("Visualizza le mie iniziative", "ShowMine", "Viaggio", new { id = @Model.Id }, new { @class = "btn btn-primary btn-large" })
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+        <h3>
+            Pubblicità</h3>
+    </div>
+</div>

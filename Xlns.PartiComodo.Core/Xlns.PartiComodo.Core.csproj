@@ -2,20 +2,18 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{04501B1B-48DE-403F-AD82-307299C4E7A1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{C0997349-E4EE-498D-BF30-014843C7445C}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xlns.PartiComodo.Core</RootNamespace>
     <AssemblyName>Xlns.PartiComodo.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,8 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,10 +31,71 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Chrypto\ChryptoHelper.cs" />
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\ExternalLibs\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\ExternalLibs\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\ExternalLibs\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Compile Include="Crypto\CryptoHelper.cs" />
+    <Compile Include="DAL\OperationManager.cs" />
+    <Compile Include="DAL\PersistenceManager.cs" />
+    <Compile Include="Login\AuthenticationResult.cs" />
+    <Compile Include="Login\LoginHelper.cs" />
+    <Compile Include="Mailer\MailerHelper.cs" />
+    <Compile Include="Model\Agenzia.cs" />
+    <Compile Include="Model\Allegato.cs" />
+    <Compile Include="Model\Flyer.cs" />
+    <Compile Include="Model\GeoLocation.cs" />
+    <Compile Include="Model\Gestore.cs" />
+    <Compile Include="Model\ModelEntity.cs" />
+    <Compile Include="Model\Partecipazione.cs" />
+    <Compile Include="Model\Tappa.cs" />
+    <Compile Include="Model\Viaggio.cs" />
+    <Compile Include="Model\ViaggioSearch.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AgenziaRepository.cs" />
+    <Compile Include="Repository\CommonRepository.cs" />
+    <Compile Include="Repository\GestoreRepository.cs" />
+    <Compile Include="Repository\ViaggioRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BusBook\Xlns.ConfigurationManager\Xlns.ConfigurationManager.csproj">
+      <Project>{DEA9D5A7-9ED6-4B73-A56D-316AF4FDCF0C}</Project>
+      <Name>Xlns.ConfigurationManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BusBook\Xlns.Google.Maps\Xlns.Google.Maps.csproj">
+      <Project>{8E19CFCF-1A43-44FA-9E38-3A4A25C2187D}</Project>
+      <Name>Xlns.Google.Maps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xlns.PartiComodo.ConfigurationManager\Xlns.PartiComodo.ConfigurationManager.csproj">
+      <Project>{AD9833B7-FDC7-427F-8B2E-FD45DD9EEF35}</Project>
+      <Name>Xlns.PartiComodo.ConfigurationManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\Gestore.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\Agenzia.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Tappa.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Viaggio.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

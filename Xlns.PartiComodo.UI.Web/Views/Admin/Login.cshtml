@@ -1,0 +1,36 @@
+﻿<div class="row">
+    <div class="span4">
+        <img src="@Url.Content("~/Content/images/poster_roma.jpg")" alt="" />
+    </div>
+    <div class="span8">
+        <h3>
+            Parti Comodo, Login Amministratore</h3>
+        @using (Html.BeginForm("AdminLogin", "Login", FormMethod.Post, new
+        {
+            id = "loginForm",
+            @class = "form-horizontal"
+        }))
+        { 
+           <div class="control-group">
+            <label class="control-label" for="inputEmail">
+                Email</label>
+            <div class="controls">
+                <input type="text" name="email" id="inputEmail" placeholder="Email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">
+                Password</label>
+            <div class="controls">
+                <input type="password" name="password" id="inputPassword" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn">
+                    Sign in</button>
+            </div>
+        </div>
+        }
+    </div>
+</div>

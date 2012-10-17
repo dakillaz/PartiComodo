@@ -7,14 +7,23 @@
     using System.Web;
     using System.Web.Mvc;
     using ViewModels;
-    using Xlns.PartComodo.Core.Crypto;
+    using Xlns.PartiComodo.Core.Model;
+    using Xlns.PartiComodo.Core.Repository;
+    using Xlns.PartiComodo.Core.Crypto;
     #endregion
 
     public class LoginController : Controller
     {
         public ActionResult Register()
         {
-            return View();
+            var viewModel = new Agenzia();
+            return View(viewModel);
+        }
+
+        public ActionResult ResetPassword()
+        {
+            var viewModel = new Agenzia();
+            return View(viewModel);
         }
 
         #region HttpPost
@@ -25,10 +34,33 @@
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel viewModel)
+        public ActionResult Login(string password, string email)
         {
-            CryptoHelper helper = new CryptoHelper();
+            CryptoHelper cryptoHelper = new CryptoHelper();
+            var ar = new AgenziaRepository();
+            var agency = ar.GetByEmail(email);
+            if (agency == null)
+                return View("Register");
+            var cryptedPassword = cryptoHelper.CryptPassword(password);
+            if (cryptedPassword.Equals(agency.Password))
+            {
+                return RedirectToAction("Index", "Dashboard", new { id = agency.Id});
+            }
             return View("Register");
+        }
+
+        [HttpPost]
+        public ActionResult AdminLogin(string password, string email)
+        {
+            CryptoHelper cryptoHelper = new CryptoHelper();
+            var gr = new GestoreRepository();
+            var admin = gr.GetByEmail(email);
+            if (admin == null)
+                return RedirectToAction("Index", "Homepage");
+            var cryptedPassword = cryptoHelper.CryptPassword(password);
+            if (cryptedPassword.Equals(admin.Password))
+                return RedirectToAction("List", "Admin");
+            return RedirectToAction("Index", "Homepage");
         }
         #endregion
     }

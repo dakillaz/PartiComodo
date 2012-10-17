@@ -3,4 +3,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div id="partiComodoCarousel" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="@Url.Content("~/Content/images/poster_particomodo.png")" alt="">
+            <div class="carousel-caption">
+                <h4>
+                    Cos'é un Tour Aggregator?</h4>
+                <p>Un Tour Aggregator non è un gestionale, ma una vera e propria esperienza informatica. Questo innovativo sistema ha il principio di evidenziare e consolidare il forte legame tra Agenzie e Tour Operator. Scorri tra i viaggi disponibili, seleziona quelli che soddisfano i tuoi criteri e crea la tua lista personalizzata. Parti Comodo ti aiuterà a promuovere le tue iniziative in modo semplice ed innovativo!</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="@Url.Content("~/Content/images/bus_book_2.jpg")" alt="">
+            <div class="carousel-caption">
+                <h4>
+                    Second Thumbnail label</h4>
+                <p>
+                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi
+                    porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#partiComodoCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="right carousel-control" href="#partiComodoCarousel" data-slide="next">&rsaquo;</a>
+</div>

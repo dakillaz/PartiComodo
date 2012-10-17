@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="Xlns.PartiComodo.Core.Model"
+                   assembly="Xlns.PartiComodo.Core" >
+
+  <class name="Gestore" table="Gestore">
+
+    <!-- Simple mappings -->
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <property name="Email" />
+    <property name="Password" />
+  </class>
+
+</hibernate-mapping>
+
+
