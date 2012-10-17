@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Xlns.PartiComodo.UI.Web.Controllers.Helper;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -37,25 +38,38 @@
                     <ul class="nav">
                         <li class="active">@Html.ActionLink("Homepage", "Index", "Homepage", null, null)</li>
                         <li>@Html.ActionLink("Cerca un Viaggio", "List", "Viaggio", null, null)</li>
-                        <li>@Html.ActionLink("Amministrazione", "Login", "Admin", null, null)</li>
-                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Non
-                            hai un Account? <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-header">Registrati subito!</li>
-                                <li class="divider"></li>
-                                <li><a href="#">@Html.ActionLink("Registrati", "Register", "Login", null, null)</a></li>
-                                <li><a href="#">@Html.ActionLink("Repera Password", "ResetPassword", "Login", null, null)</a></li>
-                            </ul>
-                        </li>
+                        @if (!Session.IsLogged())
+                        {
+                            <li>@Html.ActionLink("Amministrazione", "Login", "Admin", null, null)</li>
+                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Non
+                                hai un Account? <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-header">Registrati subito!</li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">@Html.ActionLink("Registrati", "Register", "Login", null, null)</a></li>
+                                    <li><a href="#">@Html.ActionLink("Repera Password", "ResetPassword", "Login", null, null)</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
-                    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { 
+                    @if (!Session.IsLogged())
+                    {
+
+                        using (Html.BeginForm("Login", "Login", FormMethod.Post, new
+                    {
                         id = "loginForm",
-                        @class = "navbar-form pull-right" }))
-                    { 
+                        @class = "navbar-form pull-right"
+                    }))
+                        { 
                         <input class="span2" type="text" name="email" placeholder="Email" />
                         <input class="span2" type="password" name="password" placeholder="Password" />
                         <button type="submit" class="btn">
                             Login</button>
+                        }
+                    }
+                    else
+                    { 
+                        @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn" })
                     }
                 </div>
                 <!--/.nav-collapse -->
@@ -68,8 +82,11 @@
                 Parti Comodo</h1>
             <p>
                 e ottimizza il riempimento!!!</p>
-            <p>
-                @Html.ActionLink("Registrati", "Register", "Login", null, new { @class = "btn btn-primary btn-large" })</p>
+            @if (!Session.IsLogged())
+            {
+                <p>
+                    @Html.ActionLink("Registrati", "Register", "Login", null, new { @class = "btn btn-primary btn-large" })</p>
+            }
         </div>
         <!-- Example row of columns -->
         <div class="row">
