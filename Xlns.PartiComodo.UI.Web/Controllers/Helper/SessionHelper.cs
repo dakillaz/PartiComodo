@@ -108,5 +108,10 @@
             return (agenzia != null || !string.IsNullOrEmpty(asAdmin));
         }
 
+        public static bool IsLoggedAsAdmin(this HttpSessionStateBase session)
+        {
+            var asAdmin = (String)session["loggedAsAdmin"];
+            return (!string.IsNullOrEmpty(asAdmin));
+        }
     }
 }
