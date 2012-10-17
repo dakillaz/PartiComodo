@@ -13,32 +13,35 @@
     <div class="tab-pane active" id="touroperator">
         <div class="row">
             <div class="span6">
-                <h3>
-                    Modulo di registrazione Tour Operator</h3>
-                <p>@Html.LabelFor(model => model.Nome)
-                    @Html.EditorFor(model => model.Nome)
-                    @Html.ValidationMessageFor(model => model.Nome)</p>
-                <p>@Html.LabelFor(model => model.Email)
-                    @Html.EditorFor(model => model.Email)
-                    @Html.ValidationMessageFor(model => model.Email)</p>
-                <p>@Html.LabelFor(model => model.Password)
-                    @Html.EditorFor(model => model.Password)
-                    @Html.ValidationMessageFor(model => model.Password)</p>
-                <p>@Html.LabelFor(model => model.Location.City)
-                    @Html.EditorFor(model => model.Location.City)
-                    @Html.ValidationMessageFor(model => model.Location.City)</p>
-                <p>@Html.LabelFor(model => model.Location.CAP)
-                    @Html.EditorFor(model => model.Location.CAP)
-                    @Html.ValidationMessageFor(model => model.Location.CAP)</p>
-                <p>@Html.LabelFor(model => model.Location.Street)
-                    @Html.EditorFor(model => model.Location.Street)
-                    @Html.ValidationMessageFor(model => model.Location.Street)</p>
-                <p>@Html.LabelFor(model => model.Location.Number)
-                    @Html.EditorFor(model => model.Location.Number)
-                    @Html.ValidationMessageFor(model => model.Location.Number)</p>
+                @using (Html.BeginForm("Register", "Login"))
+                { 
+                    <h3>
+                        Modulo di registrazione Tour Operator</h3>
+                    <p>@Html.LabelFor(model => model.Nome)
+                        @Html.EditorFor(model => model.Nome)
+                        @Html.ValidationMessageFor(model => model.Nome)</p>
+                    <p>@Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)</p>
+                    <p>@Html.LabelFor(model => model.Password)
+                        @Html.EditorFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)</p>
+                    <p>@Html.LabelFor(model => model.Location.City)
+                        @Html.EditorFor(model => model.Location.City)
+                        @Html.ValidationMessageFor(model => model.Location.City)</p>
+                    <p>@Html.LabelFor(model => model.Location.CAP)
+                        @Html.EditorFor(model => model.Location.CAP)
+                        @Html.ValidationMessageFor(model => model.Location.CAP)</p>
+                    <p>@Html.LabelFor(model => model.Location.Street)
+                        @Html.EditorFor(model => model.Location.Street)
+                        @Html.ValidationMessageFor(model => model.Location.Street)</p>
+                    <p>@Html.LabelFor(model => model.Location.Number)
+                        @Html.EditorFor(model => model.Location.Number)
+                        @Html.ValidationMessageFor(model => model.Location.Number)</p>
                     <p>
-                    <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
+                        <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
                     </p>
+                }
                 <p>
                     Cliccando su Registra, accetti i Termini e le Condizioni d'Uso di "Parti Comodo"
                     e confermi di aver letto e compreso la nostra Normativa sull'utilizzo dei dati.
@@ -61,32 +64,36 @@
     <div class="tab-pane" id="agency">
         <div class="row">
             <div class="span6">
-                <h3>
-                    Modulo di registrazione Agenzia</h3>
-                <p>@Html.LabelFor(model => model.Nome)
-                    @Html.EditorFor(model => model.Nome)
-                    @Html.ValidationMessageFor(model => model.Nome)</p>
-                <p>@Html.LabelFor(model => model.Email)
-                    @Html.EditorFor(model => model.Email)
-                    @Html.ValidationMessageFor(model => model.Email)</p>
-                <p>@Html.LabelFor(model => model.Password)
-                    @Html.EditorFor(model => model.Password)
-                    @Html.ValidationMessageFor(model => model.Password)</p>
-                <p>@Html.LabelFor(model => model.Location.City)
-                    @Html.EditorFor(model => model.Location.City)
-                    @Html.ValidationMessageFor(model => model.Location.City)</p>
-                <p>@Html.LabelFor(model => model.Location.CAP)
-                    @Html.EditorFor(model => model.Location.CAP)
-                    @Html.ValidationMessageFor(model => model.Location.CAP)</p>
-                <p>@Html.LabelFor(model => model.Location.Street)
-                    @Html.EditorFor(model => model.Location.Street)
-                    @Html.ValidationMessageFor(model => model.Location.Street)</p>
-                <p>@Html.LabelFor(model => model.Location.Number)
-                    @Html.EditorFor(model => model.Location.Number)
-                    @Html.ValidationMessageFor(model => model.Location.Number)</p>
+                @using (Html.BeginForm("Register", "Login"))
+                { 
+                    <h3>
+                        Modulo di registrazione Agenzia</h3>
+                    <p>@Html.LabelFor(model => model.Nome)
+                        @Html.EditorFor(model => model.Nome)
+                        @Html.ValidationMessageFor(model => model.Nome)</p>
+                    <p>@Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)</p>
+                    <p>@Html.LabelFor(model => model.Password)
+                        @Html.EditorFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)</p>
+                    <p>@Html.LabelFor(model => model.Location.City)
+                        @Html.EditorFor(model => model.Location.City)
+                        @Html.ValidationMessageFor(model => model.Location.City)</p>
+                    <p>@Html.LabelFor(model => model.Location.CAP)
+                        @Html.EditorFor(model => model.Location.CAP)
+                        @Html.ValidationMessageFor(model => model.Location.CAP)</p>
+                    <p>@Html.LabelFor(model => model.Location.Street)
+                        @Html.EditorFor(model => model.Location.Street)
+                        @Html.ValidationMessageFor(model => model.Location.Street)</p>
+                    <p>@Html.LabelFor(model => model.Location.Number)
+                        @Html.EditorFor(model => model.Location.Number)
+                        @Html.ValidationMessageFor(model => model.Location.Number)</p>
+                    
                     <p>
-                    <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
+                        <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
                     </p>
+                }
                 <p>
                     Cliccando su Registra, accetti i Termini e le Condizioni d'Uso di "Parti Comodo"
                     e confermi di aver letto e compreso la nostra Normativa sull'utilizzo dei dati.

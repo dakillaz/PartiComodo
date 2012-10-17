@@ -11,17 +11,17 @@
 
     public class Agenzia : ModelEntity
     {
-        [Required]
+        [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Nome Agenzia")]
         [StringLength(50, ErrorMessage = "Il campo può essere lungo al massimo 50 caratteri")]
         public virtual string Nome { get; set; }
 
-        [Required]
+        
         [Display(Name = "Ragione Sociale")]
         [StringLength(100, ErrorMessage = "Il campo può essere lungo al massimo 100 caratteri")]
         public virtual string RagioneSociale { get; set; }
 
-        [Required]
+        
         [Display(Name = "Partita Iva")]
         [StringLength(13, ErrorMessage = "Il campo può essere lungo al massimo 13 caratteri")]
         public virtual string PIva { get; set; }
@@ -34,7 +34,7 @@
         [Display(Name = "Fax")]
         public virtual String Fax { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Email")]
         public virtual string Email { get; set; }
 
