@@ -11,6 +11,7 @@
     using Xlns.PartiComodo.Core.Repository;
     using Xlns.PartiComodo.Core.Crypto;
     using Xlns.PartiComodo.UI.Web.Controllers.Helper;
+    using Xlns.PartiComodo.Core.Mailer;
     #endregion
 
     public class LoginController : Controller
@@ -52,7 +53,7 @@
             if (cryptedPassword.Equals(agency.Password))
             {
                 Session.Login(agency);
-                return RedirectToAction("Index", "Dashboard", new { id = agency.Id});
+                return RedirectToAction("Index", "Dashboard", new { id = agency.Id });
             }
             return View("Register");
         }
@@ -72,6 +73,25 @@
                 return RedirectToAction("List", "Admin");
             }
             return RedirectToAction("Index", "Homepage");
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(string email)
+        {
+            var ar = new AgenziaRepository();
+            var agency = ar.GetByEmail(email);
+            if (agency != null)
+            {
+                CryptoHelper cryptoHelper = new CryptoHelper();
+                var random = new Random();
+                var password = random.Next().ToString();
+                agency.Password = cryptoHelper.CryptPassword(password);
+                ar.Save(agency);
+                var mailerHelper = new MailerHelper();
+                var text = string.Format("Gentile {0} la tua nuova password di Parti Comodo è: {1}", agency.Nome, password);
+                mailerHelper.SendMail(email, text);
+            }
+            return View("Register");
         }
 
         #endregion

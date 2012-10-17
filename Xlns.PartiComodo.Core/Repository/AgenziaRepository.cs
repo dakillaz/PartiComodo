@@ -46,7 +46,7 @@
                     throw new Exception(message, ex);
                 }
             }
-        }  
+        }
 
         public Agenzia GetByEmail(string email)
         {
@@ -68,6 +68,11 @@
                     throw new Exception(message, ex);
                 }
             }
-        }  
+        }
+
+        public void Save(Agenzia agenzia)
+        {
+            base.update<Agenzia>(agenzia);
+        }
     }
 }
