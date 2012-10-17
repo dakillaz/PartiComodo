@@ -10,6 +10,7 @@
     using Xlns.PartiComodo.Core.Model;
     using Xlns.PartiComodo.Core.Repository;
     using Xlns.PartiComodo.Core.Crypto;
+    using Xlns.PartiComodo.UI.Web.Controllers.Helper;
     #endregion
 
     public class LoginController : Controller
@@ -24,6 +25,12 @@
         {
             var viewModel = new Agenzia();
             return View(viewModel);
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Logout();
+            return RedirectToAction("Index", "Homepage");
         }
 
         #region HttpPost
@@ -44,6 +51,7 @@
             var cryptedPassword = cryptoHelper.CryptPassword(password);
             if (cryptedPassword.Equals(agency.Password))
             {
+                Session.Login(agency);
                 return RedirectToAction("Index", "Dashboard", new { id = agency.Id});
             }
             return View("Register");
@@ -59,9 +67,13 @@
                 return RedirectToAction("Index", "Homepage");
             var cryptedPassword = cryptoHelper.CryptPassword(password);
             if (cryptedPassword.Equals(admin.Password))
+            {
+                Session.LoginAsAdmin();
                 return RedirectToAction("List", "Admin");
+            }
             return RedirectToAction("Index", "Homepage");
         }
+
         #endregion
     }
 }

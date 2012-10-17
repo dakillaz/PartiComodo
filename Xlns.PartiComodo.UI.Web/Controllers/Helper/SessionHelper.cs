@@ -72,6 +72,7 @@
         public static void Logout(this HttpSessionStateBase session)
         {
             session.Remove("loggedAgenzia");
+            session.Remove("loggedAsAdmin");
         }
 
         //public static Flyer getFlyerInModifica(this HttpSessionState session)
@@ -93,5 +94,19 @@
         //{
         //    session["flyer"] = flyer;
         //}
+
+
+        public static void LoginAsAdmin(this HttpSessionStateBase session)
+        {
+            setDataInSession<String>(session, "loggedAsAdmin", "Admin");
+        }
+
+        public static bool IsLogged(this HttpSessionStateBase session)
+        {
+            var agenzia = GetLoggedAgenzia(session);
+            var asAdmin = (String)session["loggedAsAdmin"];
+            return (agenzia != null || !string.IsNullOrEmpty(asAdmin));
+        }
+
     }
 }
