@@ -75,9 +75,5 @@
             }
         }
 
-        public void Save(Agenzia agenzia)
-        {
-            base.update<Agenzia>(agenzia);
-        }
     }
 }
