@@ -1,27 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
-
-namespace Xlns.PartiComodo.Core.Model
+﻿namespace Xlns.PartiComodo.Core.Model
 {
+
+    #region Namespaces
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.ComponentModel.DataAnnotations;
+    #endregion
+
     public class Flyer : ModelEntity
     {
 
-        [Required(ErrorMessage="Il titolo è obbligatorio!")]
-        [Display(Name="Titolo")]
+        [Required(ErrorMessage = "Il titolo è obbligatorio!")]
+        [Display(Name = "Titolo")]
         [StringLength(50, ErrorMessage = "Il titolo dev'essere al massimo 50 caratteri")]
         public virtual String Titolo { get; set; }
 
+        [Required(ErrorMessage = "La descrizione è obbligatoria!")]
         [Display(Name = "Descrizione")]
-        [StringLength(500, ErrorMessage="La descrizione dev'essere al massimo 500 caratteri")]
+        [StringLength(500, ErrorMessage = "La descrizione dev'essere al massimo 500 caratteri")]
         public virtual String Descrizione { get; set; }
+
+         [Display(Name = "Pubblicato?")]
+        public virtual bool IsPubblicato { get; set; }
 
 
         public virtual IList<Viaggio> Viaggi { get; set; }
 
-        public virtual Agenzia Agenzia { get; set; }           
+        public virtual Agenzia Agenzia { get; set; }
 
     }
 }

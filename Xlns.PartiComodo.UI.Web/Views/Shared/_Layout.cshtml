@@ -1,6 +1,6 @@
 ﻿@using Xlns.PartiComodo.UI.Web.Controllers.Helper;
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
@@ -25,6 +25,7 @@
     @RenderSection("head", false)
 </head>
 <body>
+    @{Html.RenderAction("Facebook", "Homepage");}
     <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
@@ -38,9 +39,10 @@
                     <ul class="nav">
                         <li class="active">@Html.ActionLink("Homepage", "Index", "Homepage", null, null)</li>
                         <li>@Html.ActionLink("Cerca un Viaggio", "List", "Viaggio", null, null)</li>
+                        <li>@Html.ActionLink("I nostri Flyer", "ListPubblicati", "Flyer", null, null)</li>
                         @if (!Session.IsLogged())
                         {
-                            <li>@Html.ActionLink("Amministrazione", "Login", "Admin", null, null)</li>
+                            
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Non
                                 hai un Account? <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -51,8 +53,9 @@
                                 </ul>
                             </li>
                         }
-                        else if (Session.IsLoggedAsAdmin()) { 
-                        <li>@Html.ActionLink("Amministrazione", "List", "Admin", null, null)</li>
+                        else if (Session.IsLoggedAsAdmin())
+                        { 
+                            <li>@Html.ActionLink("Amministrazione", "List", "Admin", null, null)</li>
                         }
                     </ul>
                     @if (!Session.IsLogged())
@@ -80,18 +83,20 @@
         </div>
     </div>
     <div class="container">
-        <div class="hero-unit">
-            <h1>
-                Parti Comodo</h1>
-            <p>
-                e ottimizza il riempimento!!!</p>
-            @if (!Session.IsLogged())
-            {
+        @if (!Session.IsLogged())
+        {
+            <div class="hero-unit">
+                <h1>
+                    Parti Comodo</h1>
                 <p>
-                    @Html.ActionLink("Registrati", "Register", "Login", null, new { @class = "btn btn-primary btn-large" })</p>
-            }
-        </div>
-        <!-- Example row of columns -->
+                    e ottimizza il riempimento!!!</p>
+                @if (!Session.IsLogged())
+                {
+                    <p>
+                        @Html.ActionLink("Registrati", "Register", "Login", null, new { @class = "btn btn-primary btn-large" })</p>
+                }
+            </div>
+        }
         <div class="row">
             <div class="span12">
                 @RenderBody()
@@ -99,19 +104,41 @@
         </div>
         <hr>
         <footer>
-                <p>Parti Comodo è sviluppato da &copy; xlns 2012</p>
-            </footer>
-    </div>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/plugins.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/main.js")" type="text/javascript"></script>
-    <script>
-        var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
-        (function (d, t) {
-            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-            g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g, s)
-        } (document, 'script'));
-    </script>
+         <div class="row">
+        <div class="span8">
+         <h3>Cos'è un Tour Aggregator?</h3>
+         <p>Un Tour Aggregator non è un gestionale, ma una vera e propria esperienza informatica. Questo innovativo sistema ha il principio di evidenziare e consolidare il forte legame tra Agenzie e Tour Operator. Scorri tra i viaggi disponibili, seleziona quelli che soddisfano i tuoi criteri e crea la tua lista personalizzata. Parti Comodo ti aiuterà a promuovere le tue iniziative in modo semplice ed innovativo! 
+</p>
+        </div>
+        <div class="span4"> <blockquote>
+            <p>
+                Parti Comodo è sviluppato da xlns 2012</p>
+            <small>Xlns, <cite title="Source Title">your right to be excellent</cite></small>
+        </blockquote>
+        </div>
+        </div>
+        <div class="row">
+        <div class="span8">
+        <div class="fb-like" data-href="http://www.xlns.it" data-send="true" data-layout="button_count"
+                    data-width="450" data-show-faces="true" data-font="segoe ui">
+                </div></div>
+        </div>
+        <div class="row">
+        <div class="span8">
+        @Html.ActionLink("Amministrazione", "Login", "Admin", null, null)
+        </div>
+        </footer>
+        @RenderSection("scripts", false)
+        <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/plugins.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/main.js")" type="text/javascript"></script>
+        <script>
+            var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+            (function (d, t) {
+                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+                s.parentNode.insertBefore(g, s)
+            } (document, 'script'));
+        </script>
 </body>
 </html>

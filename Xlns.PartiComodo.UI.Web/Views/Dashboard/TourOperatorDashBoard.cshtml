@@ -1,0 +1,33 @@
+﻿@model Xlns.PartiComodo.Core.Model.Agenzia
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span4">
+            <h3>
+                Operazioni disponibili</h3>
+            <ul class="nav nav-tabs nav-stacked">
+                <li>@Html.ActionLink("Crea una nuova Iniziativa", "Create", "Viaggio", null, null)</li>
+                <li>@Html.ActionLink("Visualizza tutte le Iniziative", "List", "Viaggio", null, null)</li>
+                <li>@Html.ActionLink("Visualizza le mie iniziative", "ListMine", "Viaggio", new { id = @Model.Id }, null)</li>
+                <li>@Html.ActionLink("Visualizza le mie iniziative in approvazione", "ListMineNotApproved", "Viaggio", new { id = @Model.Id }, null)</li>
+                <li>@Html.ActionLink("Crea un nuovo Flyer", "Create", "Flyer", new { id = @Model.Id }, null)</li>
+                <li>@Html.ActionLink("Visualizza i miei Flyer", "List", "Flyer", new { id = @Model.Id }, null)</li>
+                <li>@Html.ActionLink("Modifica i miei dati", "Edit", "Agenzia", new { id = @Model.Id }, null)</li>
+            </ul>
+        </div>
+        <div class="span8">
+            <h3>
+                Benvenuto @Model.Nome</h3>
+            <p class="text-info">
+                Benvenuto, questa è la tua personale Dashboard. Da qui potrai gestire le tue iniziative,
+                crearne di nuove o semplicemente cercare nuovi partner commerciali per la tua attività.</p>
+            <h4>
+                Parti Comodo Wiki</h4>
+            <p>
+                TO: Tour Operator</p>
+            <p>
+                AdV: Agenzia di Viaggi</p>
+            <p>
+                Pubblico: Gli utenti non registrati a Parti Comodo</p>
+        </div>
+    </div>
+</div>

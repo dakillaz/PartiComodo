@@ -1,0 +1,26 @@
+﻿<div class="row">
+    <div class="span4">
+        <img src="@Url.Content("~/Content/images/poster_roma.jpg")" alt="" />
+    </div>
+    <div class="span8">
+        <h3>
+            Invia la MailingList</h3>
+        @using (Html.BeginForm("SendMailingList", "Admin"))
+        {
+            <legend>Crea e Invia la MailingList dei Viaggi Approvati a partire dal giorno...</legend>
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">
+                    Data di Approvazione</label>
+                <div class="controls">
+                    <input type="text" name="dataApprovazione" id="datepicker" />
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">
+                        Invia NewsLetter</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

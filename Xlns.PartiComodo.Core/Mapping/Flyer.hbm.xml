@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="Xlns.PartiComodo.Core.Model"
+                   assembly="Xlns.PartiComodo.Core" >
+
+  <class name="Flyer" table="Flyer">
+
+    <!-- Simple mappings -->
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <property name="Titolo" />
+    <property name="Descrizione" />
+    <property name="IsPubblicato" />
+
+    <bag name="Viaggi" table="Flyer_Viaggio" lazy="false">
+      <key column="Flyer"/>
+      <many-to-many column="Viaggio"
+         class="Viaggio"/>
+    </bag>
+
+    <many-to-one name="Agenzia"
+      class="Agenzia"
+      cascade="none" fetch="join"
+    lazy="false" />
+  </class>
+
+</hibernate-mapping>
+
+

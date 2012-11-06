@@ -75,5 +75,61 @@
             }
         }
 
+        /// <summary>
+        /// Gets all Agenzia where isTourOperator is false.
+        /// </summary>
+        /// <param name="maximumRows">The maximum rows.</param>
+        /// <param name="startRowIndex">Start index of the row.</param>
+        /// <returns></returns>
+        public IList<Agenzia> GetAllAdV(int maximumRows, int startRowIndex)
+        {
+             using (var manager = new OperationManager())
+            {
+                try
+                {
+                    var session = manager.BeginOperation();
+                    var res = session.Query<Agenzia>()
+                                    .Where(c => !c.IsTourOperator).ToList();
+                    manager.CommitOperation();
+                    return res;
+                }
+                catch (Exception ex)
+                {
+                    manager.RollbackOperation();
+                    string message = String.Format("Impossibile recuperare la lista delle AdV");
+                    logger.ErrorException(message, ex);
+                    throw new Exception(message, ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets all Agenzia where isTourOperator is true.
+        /// </summary>
+        /// <param name="maximumRows">The maximum rows.</param>
+        /// <param name="startRowIndex">Start index of the row.</param>
+        /// <returns></returns>
+        public IList<Agenzia> GetAllTO(int maximumRows, int startRowIndex)
+        {
+            using (var manager = new OperationManager())
+            {
+                try
+                {
+                    var session = manager.BeginOperation();
+                    var res = session.Query<Agenzia>()
+                                    .Where(c => c.IsTourOperator).ToList();
+                    manager.CommitOperation();
+                    return res;
+                }
+                catch (Exception ex)
+                {
+                    manager.RollbackOperation();
+                    string message = String.Format("Impossibile recuperare la lista dei TO");
+                    logger.ErrorException(message, ex);
+                    throw new Exception(message, ex);
+                }
+            }
+        }
+
     }
 }

@@ -5,19 +5,26 @@ using System.Web;
 using System.Web.Mvc;
 using Xlns.PartiComodo.Core.Repository;
 using Xlns.PartiComodo.Core.Model;
+using Xlns.PartiComodo.UI.Web.Controllers.Helper;
 
 namespace Xlns.PartiComodo.UI.Web.Controllers
 {
     public class ViaggioController : Controller
     {
-        //
-        // GET: /Viaggio/
-
         public ActionResult Index()
         {
             return View();
         }
-
+        
+        public ActionResult List()
+        {
+            var vr = new ViaggioRepository();
+            var model = vr.GetApproved();
+            var mlh = new MailingListHelper();
+            mlh.GetMailingList(model);
+            return View(model);
+        }
+        
         public ActionResult Details(int id)
         {
             var vr = new ViaggioRepository();
@@ -25,10 +32,10 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             return View(model);
         }
 
-        public ActionResult List()
+        public ActionResult Edit(int id)
         {
             var vr = new ViaggioRepository();
-            var model = vr.GetApproved();
+            var model = vr.GetById(id);
             return View(model);
         }
 
@@ -38,7 +45,8 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             return View(model);
         }
 
-        public ActionResult ShowMine(int id)
+        #region TO Actions
+        public ActionResult ListMine(int id)
         {
             var vr = new ViaggioRepository();
             var ar = new AgenziaRepository();
@@ -47,11 +55,20 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             return View(model);
         }
 
+        public ActionResult ListMineNotApproved(int id)
+        {
+            var vr = new ViaggioRepository();
+            var ar = new AgenziaRepository();
+            var agency = ar.GetById(id);
+            var model = vr.GetUnapproved().Where(c => c.Agenzia.Id == agency.Id);
+            return View(model.ToList());
+        }
+        #endregion
+
         #region HttpPost
         [HttpPost]
         public ActionResult Save()
         {
-
             return RedirectToAction("ShowMine");
         }
         #endregion

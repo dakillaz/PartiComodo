@@ -1,0 +1,65 @@
+﻿@model IList<Xlns.PartiComodo.Core.Model.Flyer>
+<div class="row">
+    <div class="span8">
+        <h3>
+            I nostri Flyer
+        </h3>
+        @{if (Model.Count > 0)
+          { 
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Titolo
+                        </th>
+                        <th>
+                            Descrizione
+                        </th>
+                        <th>
+                            Flyer di
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{foreach (var item in Model)
+                      {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(c => item.Titolo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(c => item.Descrizione)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(c => item.Agenzia.Nome)
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                      }
+                    }
+                </tbody>
+            </table>
+          }
+          else
+          { 
+            <p>
+                Nessun Flyer Disponibile</p>
+          }
+        }
+    </div>
+    <div class="span4">
+        <h3>
+            Cos'è un Flyer?
+        </h3>
+        <p>
+            Un Flyer è un volantino elettronico che ti aiuterà a scegliere la vacanza dei tui
+            Sogni. Sfogliali tutti e... Parti Comodo!
+        </p>
+        <p>
+            <img src="@Url.Content("~/Content/images/poster_sanremo.jpg")" alt=""></p>
+    </div>
+</div>

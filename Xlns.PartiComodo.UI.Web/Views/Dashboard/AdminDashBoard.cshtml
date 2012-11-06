@@ -1,0 +1,56 @@
+﻿<script>
+    $(function () {
+        $("#datepicker").datepicker();
+        $("#datepicker").datepicker("option", "dateFormat", "d MM, yy");
+    });
+	</script>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span4">
+            <h3>
+                Operazioni disponibili</h3>
+            <ul class="nav nav-tabs nav-stacked">
+                <li>@Html.ActionLink("Visualizza TO e AdV", "List", "Agenzia")</li>
+                <li>@Html.ActionLink("Visualizza TO", "ListTO", "Agenzia")</li>
+                <li>@Html.ActionLink("Visualizza AdV", "ListAdV", "Agenzia")</li>
+                <li>@Html.ActionLink("Visualizza Iniziative da Approvare", "List", "Admin")</li>
+                <li>@Html.ActionLink("Visualizza Iniziative Approvate", "List", "Viaggio")</li>
+                <li>@Html.ActionLink("Invia MailingList", "MailingList", "Admin")</li>
+            </ul>
+        </div>
+        <div class="span8">
+            <h3>
+                Benvenuto Amministratore,</h3>
+            <p class="text-info">
+                Da qui sarà possibile gestire tutte le Anagrafiche di Parti Comodo.</p>
+            @using (Html.BeginForm("SendMailingList", "Admin"))
+            {
+                <legend>Invia la MailingList</legend>
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">
+                        Data di Approvazione</label>
+                    <div class="controls">
+                        <input type="text" name="dataApprovazione" id="datepicker" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">
+                            Invia NewsLetter</button>
+                    </div>
+                </div>
+            }
+            <h4>
+                Parti Comodo Wiki</h4>
+            <p>
+                TO: Tour Operator</p>
+            <p>
+                AdV: Agenzia di Viaggi</p>
+            <p>
+                Pubblico: Gli utenti non registrati a Parti Comodo</p>
+            <p>
+                Iniziative da Approvare: iniziative ancora non confermate da un amministratore e
+                quindi non visibile alle AdV</p>
+        </div>
+    </div>
+</div>

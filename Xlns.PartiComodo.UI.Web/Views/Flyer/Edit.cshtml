@@ -1,0 +1,38 @@
+﻿@model Xlns.PartiComodo.Core.Model.Flyer
+<div class="row">
+    <div class="span8">
+        <h3>
+            Gestisci il tuo Flyer</h3>
+        @using (Html.BeginForm("Save", "Flyer", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Agenzia.Id)
+            @Html.HiddenFor(model => model.Viaggi)
+            @Html.LabelFor(c => c.Titolo)
+            @Html.EditorFor(c => c.Titolo)
+            @Html.ValidationMessageFor(model => model.Titolo)
+            @Html.LabelFor(c => c.Descrizione)
+            @Html.EditorFor(c => c.Descrizione)
+            @Html.ValidationMessageFor(model => model.Descrizione)
+            <label class="checkbox">
+                @Html.EditorFor(c => c.IsPubblicato)
+                @Html.LabelFor(c => c.IsPubblicato)
+            </label>
+            <p>
+                <input type="submit" value="Modifica il Flyer" class="btn btn-primary btn-large" />
+                @Html.ActionLink("Elimina il Flyer", "Delete", "Flyer", new { id = Model.Id }, new { @class = "btn btn-primary btn-large" })
+            </p>
+        }
+    </div>
+    <div class="span4">
+        <h3>
+            Cos'è un Flyer?
+        </h3>
+        <p>
+            Un Flyer è un volantino elettronico che ti aiuterà a promuovere le tue inziative.
+            Sfoglia la lista dei viaggi, aggregali e crea la tua vetrina digitale.
+        </p>
+        <p>
+            <img src="@Url.Content("~/Content/images/poster_sanremo.jpg")" alt=""></p>
+    </div>
+</div>

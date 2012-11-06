@@ -1,0 +1,51 @@
+﻿@model List<Xlns.PartiComodo.Core.Model.Agenzia>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Ragione Sociale
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>
+                Indirizzo
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{foreach (var item in Model)
+          {
+            <tr>
+                <td>
+                    @Html.DisplayFor(c => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(c => item.RagioneSociale)
+                </td>
+                <td>
+                    <a href="mailto:#">@Html.DisplayFor(c => item.Email)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(c => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(c => item.Location.City) (@Html.DisplayFor(c => item.Location.CAP))
+                    - @Html.DisplayFor(c => item.Location.Street) @Html.DisplayFor(c => item.Location.Number)
+                </td>
+                <td>
+                    @Html.ActionLink("Vedi dettaglio", "Edit", "Agenzia", new { id = @item.Id }, new { @class = "btn" })
+                </td>
+            </tr>
+          }
+        }
+    </tbody>
+</table>

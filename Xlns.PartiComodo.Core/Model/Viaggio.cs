@@ -34,6 +34,10 @@
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}")]
         public virtual DateTime? DataPubblicazione { get; set; }
 
+        [Display(Name = "Data di approvazione")]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}")]
+        public virtual DateTime? DataApprovazione { get; set; }
+
         public virtual IList<Tappa> Tappe { get; set; }
 
         public virtual Agenzia Agenzia { get; set; }

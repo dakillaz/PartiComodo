@@ -66,7 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AgenziaController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\FlyerController.cs" />
+    <Compile Include="Controllers\Helper\FlyerHelper.cs" />
+    <Compile Include="Controllers\Helper\MailingListHelper.cs" />
     <Compile Include="Controllers\Helper\SessionHelper.cs" />
     <Compile Include="Controllers\HomepageController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -75,6 +79,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ItemPopulateFlyerViewModel.cs" />
+    <Compile Include="ViewModels\ListFlyerViewModel.cs" />
+    <Compile Include="ViewModels\FacebookViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
   </ItemGroup>
@@ -172,6 +179,7 @@
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\plugins.js" />
     <Content Include="Scripts\xlnsScripts\viaggio.detail.js" />
+    <Content Include="Scripts\xlnsScripts\viaggio.select.js" />
     <Content Include="Scripts\xlnsScripts\xlns-jquery-ui.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -246,16 +254,52 @@
     <Content Include="Views\Viaggio\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Dashboard\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Admin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Viaggio\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Viaggio\ShowMine.cshtml" />
+    <Content Include="Views\Agenzia\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dashboard\TourOperatorDashBoard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dashboard\AgenziaDashBoard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agenzia\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Viaggio\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Viaggio\ListMine.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Viaggio\ListMineNotApproved.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\MailingList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Dashboard\AdminDashBoard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Homepage\Facebook.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Flyer\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Flyer\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Flyer\Populate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Flyer\ListPubblicati.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -274,7 +318,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>4464</DevelopmentServerPort>
+          <DevelopmentServerPort>3864</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

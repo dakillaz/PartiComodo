@@ -1,0 +1,62 @@
+﻿@model Xlns.PartiComodo.UI.Web.ViewModels.ListFlyerViewModel
+<div class="row">
+    <div class="span8">
+        <h3>
+            Flyers di @Model.Agenzia.Nome
+        </h3>
+        @{if (Model.Flyers.Count > 0)
+          { 
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Titolo
+                        </th>
+                        <th>
+                            Descrizione
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{foreach (var item in Model.Flyers)
+                      {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(c => item.Titolo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(c => item.Descrizione)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Modifica Flyer", "Edit", "Flyer", new { id = @item.Id }, new { @class = "btn" })
+                                @Html.ActionLink("Popola Flyer", "Populate", "Flyer", new { id = @item.Id }, new { @class = "btn" })
+                            </td>
+                        </tr>
+                      }
+                    }
+                </tbody>
+            </table>
+          }
+          else
+          { 
+            <p>
+                Non hai ancora creato nessun Flyer</p>
+            <p>@Html.ActionLink("Crea un nuovo Flyer", "Create", "Flyer", new { id = Model.Agenzia.Id }, new { @class = "btn btn-primary btn-large" })</p>
+          }
+        }
+    </div>
+    <div class="span4">
+        <h3>
+            Cos'è un Flyer?
+        </h3>
+        <p>
+            Un Flyer è un volantino elettronico che ti aiuterà a promuovere le tue inziative.
+            Sfoglia la lista dei viaggi, aggregali e crea la tua vetrina digitale.
+        </p>
+        <p>
+            <img src="@Url.Content("~/Content/images/poster_sanremo.jpg")" alt=""></p>
+    </div>
+</div>

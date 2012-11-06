@@ -47,10 +47,12 @@
                 var ar = new AgenziaRepository();
                 ar.Save(agency);
                 Session.Login(agency);
-                return RedirectToAction("Index", "Dashboard", new { id = agency.Id });
+                if (agency.IsTourOperator)
+                    return RedirectToAction("TourOperatorDashboard", "Dashboard", new { id = agency.Id });
+                return RedirectToAction("AgenziaDashboard", "Dashboard", new { id = agency.Id });
             }
             else return View(agency);
-            
+
         }
 
         [HttpPost]
@@ -65,7 +67,9 @@
             if (cryptedPassword.Equals(agency.Password))
             {
                 Session.Login(agency);
-                return RedirectToAction("Index", "Dashboard", new { id = agency.Id });
+                if (agency.IsTourOperator)
+                    return RedirectToAction("TourOperatorDashboard", "Dashboard", new { id = agency.Id });
+                return RedirectToAction("AgenziaDashboard", "Dashboard", new { id = agency.Id });
             }
             return View("Register");
         }
@@ -82,7 +86,7 @@
             if (cryptedPassword.Equals(admin.Password))
             {
                 Session.LoginAsAdmin();
-                return RedirectToAction("List", "Admin");
+                return RedirectToAction("AdminDashBoard", "Dashboard");
             }
             return RedirectToAction("Index", "Homepage");
         }
