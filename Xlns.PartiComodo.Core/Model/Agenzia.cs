@@ -16,12 +16,12 @@
         [StringLength(50, ErrorMessage = "Il campo può essere lungo al massimo 50 caratteri")]
         public virtual string Nome { get; set; }
 
-        
+        [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Ragione Sociale")]
         [StringLength(100, ErrorMessage = "Il campo può essere lungo al massimo 100 caratteri")]
         public virtual string RagioneSociale { get; set; }
 
-        
+        [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Partita Iva")]
         [StringLength(13, ErrorMessage = "Il campo può essere lungo al massimo 13 caratteri")]
         public virtual string PIva { get; set; }

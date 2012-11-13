@@ -24,6 +24,12 @@
             return View();
         }
 
+        public ActionResult Detail(int id)
+        {
+            var model = fr.GetById(id);
+            return View(model);
+        }
+
         public ActionResult List(int id)
         {
             var agency = ar.GetById(id);
@@ -52,7 +58,7 @@
                 IsPubblicato = false
             };
             fr.Save(model);
-            return View("Edit", model);
+            return RedirectToAction("Edit", new { id = model.Id });
         }
 
         public ActionResult Edit(int id)

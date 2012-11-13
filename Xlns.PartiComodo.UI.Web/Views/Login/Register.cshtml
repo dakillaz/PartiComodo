@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Register";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@model Xlns.PartiComodo.Core.Model.Agenzia
+﻿@model Xlns.PartiComodo.UI.Web.ViewModels.RegisterViewModel
 <h2>
     Non hai ancora un Account? Registrati subito e... Parti Comodo!!!</h2>
 <ul class="nav nav-tabs">
@@ -17,27 +13,37 @@
                 { 
                     <h3>
                         Modulo di registrazione Tour Operator</h3>
-                    <p>@Html.LabelFor(model => model.Nome)
-                        @Html.EditorFor(model => model.Nome)
-                        @Html.ValidationMessageFor(model => model.Nome)</p>
-                    <p>@Html.LabelFor(model => model.Email)
-                        @Html.EditorFor(model => model.Email)
-                        @Html.ValidationMessageFor(model => model.Email)</p>
-                    <p>@Html.LabelFor(model => model.Password)
-                        @Html.EditorFor(model => model.Password)
-                        @Html.ValidationMessageFor(model => model.Password)</p>
-                    <p>@Html.LabelFor(model => model.Location.City)
-                        @Html.EditorFor(model => model.Location.City)
-                        @Html.ValidationMessageFor(model => model.Location.City)</p>
-                    <p>@Html.LabelFor(model => model.Location.CAP)
-                        @Html.EditorFor(model => model.Location.CAP)
-                        @Html.ValidationMessageFor(model => model.Location.CAP)</p>
-                    <p>@Html.LabelFor(model => model.Location.Street)
-                        @Html.EditorFor(model => model.Location.Street)
-                        @Html.ValidationMessageFor(model => model.Location.Street)</p>
-                    <p>@Html.LabelFor(model => model.Location.Number)
-                        @Html.EditorFor(model => model.Location.Number)
-                        @Html.ValidationMessageFor(model => model.Location.Number)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Nome)
+                        @Html.EditorFor(model => model.Agenzia.Nome)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Nome)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Email)
+                        @Html.EditorFor(model => model.Agenzia.Email)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Email)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Password)
+                        @Html.EditorFor(model => model.Agenzia.Password)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Password)</p>
+                    <p>@Html.LabelFor(model => model.RepeatPassword)
+                        @Html.EditorFor(model => model.RepeatPassword)
+                        @Html.ValidationMessageFor(model => model.RepeatPassword)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.RagioneSociale)
+                        @Html.EditorFor(model => model.Agenzia.RagioneSociale)
+                        @Html.ValidationMessageFor(model => model.Agenzia.RagioneSociale)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.PIva)
+                        @Html.EditorFor(model => model.Agenzia.PIva)
+                        @Html.ValidationMessageFor(model => model.Agenzia.PIva)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.City)
+                        @Html.EditorFor(model => model.Agenzia.Location.City)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.City)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.CAP)
+                        @Html.EditorFor(model => model.Agenzia.Location.CAP)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.CAP)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.Street)
+                        @Html.EditorFor(model => model.Agenzia.Location.Street)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.Street)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.Number)
+                        @Html.EditorFor(model => model.Agenzia.Location.Number)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.Number)</p>
+                    @Html.HiddenFor(model => model.Agenzia.IsTourOperator)
                     <p>
                         <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
                     </p>
@@ -68,28 +74,27 @@
                 { 
                     <h3>
                         Modulo di registrazione Agenzia</h3>
-                    <p>@Html.LabelFor(model => model.Nome)
-                        @Html.EditorFor(model => model.Nome)
-                        @Html.ValidationMessageFor(model => model.Nome)</p>
-                    <p>@Html.LabelFor(model => model.Email)
-                        @Html.EditorFor(model => model.Email)
-                        @Html.ValidationMessageFor(model => model.Email)</p>
-                    <p>@Html.LabelFor(model => model.Password)
-                        @Html.EditorFor(model => model.Password)
-                        @Html.ValidationMessageFor(model => model.Password)</p>
-                    <p>@Html.LabelFor(model => model.Location.City)
-                        @Html.EditorFor(model => model.Location.City)
-                        @Html.ValidationMessageFor(model => model.Location.City)</p>
-                    <p>@Html.LabelFor(model => model.Location.CAP)
-                        @Html.EditorFor(model => model.Location.CAP)
-                        @Html.ValidationMessageFor(model => model.Location.CAP)</p>
-                    <p>@Html.LabelFor(model => model.Location.Street)
-                        @Html.EditorFor(model => model.Location.Street)
-                        @Html.ValidationMessageFor(model => model.Location.Street)</p>
-                    <p>@Html.LabelFor(model => model.Location.Number)
-                        @Html.EditorFor(model => model.Location.Number)
-                        @Html.ValidationMessageFor(model => model.Location.Number)</p>
-                    
+                    <p>@Html.LabelFor(model => model.Agenzia.Nome)
+                        @Html.EditorFor(model => model.Agenzia.Nome)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Nome)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Email)
+                        @Html.EditorFor(model => model.Agenzia.Email)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Email)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Password)
+                        @Html.EditorFor(model => model.Agenzia.Password)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Password)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.City)
+                        @Html.EditorFor(model => model.Agenzia.Location.City)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.City)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.CAP)
+                        @Html.EditorFor(model => model.Agenzia.Location.CAP)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.CAP)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.Street)
+                        @Html.EditorFor(model => model.Agenzia.Location.Street)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.Street)</p>
+                    <p>@Html.LabelFor(model => model.Agenzia.Location.Number)
+                        @Html.EditorFor(model => model.Agenzia.Location.Number)
+                        @Html.ValidationMessageFor(model => model.Agenzia.Location.Number)</p>
                     <p>
                         <input type="submit" value="Registrati" class="btn btn-primary btn-large" />
                     </p>

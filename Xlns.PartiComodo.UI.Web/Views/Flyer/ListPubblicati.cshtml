@@ -37,7 +37,8 @@
                                 @Html.DisplayFor(c => item.Agenzia.Nome)
                             </td>
                             <td>
-                            </td>
+                    @Html.ActionLink("Vedi dettaglio", "Detail", "Flyer", new { id = @item.Id }, new { @class = "btn" })
+                </td>
                         </tr>
                       }
                     }

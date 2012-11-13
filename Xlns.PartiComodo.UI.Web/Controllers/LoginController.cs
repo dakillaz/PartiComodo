@@ -18,7 +18,7 @@
     {
         public ActionResult Register()
         {
-            var viewModel = new Agenzia();
+            var viewModel = new RegisterViewModel();
             return View(viewModel);
         }
 
@@ -36,13 +36,12 @@
 
         #region HttpPost
         [HttpPost]
-        public ActionResult Register(Agenzia agency)
+        public ActionResult Register(RegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 CryptoHelper cryptoHelper = new CryptoHelper();
-                agency.RagioneSociale = agency.Nome;
-                agency.PIva = "123456";
+                var agency = viewModel.Agenzia;
                 agency.Password = cryptoHelper.CryptPassword(agency.Password);
                 var ar = new AgenziaRepository();
                 ar.Save(agency);
@@ -51,7 +50,7 @@
                     return RedirectToAction("TourOperatorDashboard", "Dashboard", new { id = agency.Id });
                 return RedirectToAction("AgenziaDashboard", "Dashboard", new { id = agency.Id });
             }
-            else return View(agency);
+            else return View(viewModel);
 
         }
 
@@ -71,7 +70,8 @@
                     return RedirectToAction("TourOperatorDashboard", "Dashboard", new { id = agency.Id });
                 return RedirectToAction("AgenziaDashboard", "Dashboard", new { id = agency.Id });
             }
-            return View("Register");
+            var viewModel = new RegisterViewModel();
+            return View("Register", viewModel);
         }
 
         [HttpPost]
@@ -107,7 +107,8 @@
                 var text = string.Format("Gentile {0} la tua nuova password di Parti Comodo è: {1}", agency.Nome, password);
                 mailerHelper.SendMail(email, text);
             }
-            return View("Register");
+            var viewModel = new RegisterViewModel();
+            return View("Register", viewModel);
         }
 
         #endregion
