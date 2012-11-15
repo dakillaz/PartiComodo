@@ -1,0 +1,44 @@
+﻿@using Xlns.PartiComodo.UI.Web.ViewModels;
+@model Xlns.PartiComodo.Core.Model.Tappa
+@{
+    String title = "Definizione punto di raccolta";
+    String updateId = "PassaDa_";
+    if (Model.Tipo == Xlns.PartiComodo.Core.Model.TipoTappa.DESTINAZIONE)
+    {
+        title = "Qual'è la destinazione?";
+        updateId = "ArrivaA_";
+    }    
+    
+}
+<style type="text/css">
+    #dialogTitle
+    {
+        padding-top: 0px;
+        line-height: normal;
+    }
+    #salvaTappaForm
+    {
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+</style>
+<h3 id="dialogTitle">@title</h3>
+    <div style="width: 100%; margin-bottom: 20px">
+@*        @{Html.RenderAction("Edit", "Location", new
+                                          {
+                                              locationPartialViewModel = new LocationPartialViewModel()
+                                              {
+                                                  Location = Model.Location,
+                                                  MapHeight = "300px",
+                                                  MapWidth = "100%",
+                                                  CssStyleForMapDiv = "width: 100%",
+                                                  MapJsAlreadyLoaded = true
+                                              }
+                                          });
+        }*@
+    </div>
+    @Html.HiddenFor(m => m.IdTipo)
+    @Html.HiddenFor(m => m.Viaggio.Id)  
+    @Html.HiddenFor(m => m.Ordinamento)  
+    <a href="#" onclick="addSearchTappa('@updateId')" class="read-more">Salva</a>
+@*<script src="@Url.Content("~/Content/scripts/viaggio.search.js")" type="text/javascript"></script>*@

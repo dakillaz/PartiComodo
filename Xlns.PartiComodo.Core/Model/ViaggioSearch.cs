@@ -23,7 +23,11 @@ namespace Xlns.PartiComodo.Core.Model
         public Decimal? PrezzoMax { get; set; }
 
 
-        public bool onlyPubblicati { get; set; }
+        public int idAgenzia { get; set; }
+        public bool searchApproved { get; set; }
+        public bool searchUnapproved { get; set; }
+        public bool searchMine { get; set; }
+        public bool searchTheirs { get; set; }
 
         public ViaggioSearch()
         {

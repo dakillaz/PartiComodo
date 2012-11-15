@@ -230,5 +230,103 @@
                 }
             }
         }
+
+
+        public List<Viaggio> Search(ViaggioSearch searchParams)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var viaggiFound = getAll<Viaggio>();
+
+                    if (searchParams != null)
+                    {
+                        if ( !(searchParams.searchApproved && searchParams.searchUnapproved)   ) 
+                        {
+                            if (searchParams.searchApproved)
+                                viaggiFound = viaggiFound.Where(v => v.Approvato == true);
+                            if (searchParams.searchUnapproved)
+                                viaggiFound = viaggiFound.Where(v => v.Approvato == false);
+                        }
+                        if (!(searchParams.searchMine && searchParams.searchTheirs))
+                        {
+                            if (searchParams.searchMine)
+                                viaggiFound = viaggiFound.Where(v => v.Agenzia.Id == searchParams.idAgenzia);
+                            if (searchParams.searchTheirs)
+                                viaggiFound = viaggiFound.Where(v => v.Agenzia.Id != searchParams.idAgenzia);
+                        }
+
+                        if (!String.IsNullOrEmpty(searchParams.SearchString))
+                            viaggiFound = viaggiFound.Where(v => v.Nome.ToUpper().StartsWith(searchParams.SearchString.ToUpper()));
+                        if (searchParams.DataPartenzaMin != null)
+                            viaggiFound = viaggiFound.Where(v => v.DataPartenza >= searchParams.DataPartenzaMin);
+                        if (searchParams.DataPartenzaMax != null)
+                            viaggiFound = viaggiFound.Where(v => v.DataPartenza <= searchParams.DataPartenzaMax);
+                        if (searchParams.PrezzoMin != null)
+                            viaggiFound = viaggiFound.Where(v => v.PrezzoStandard >= searchParams.PrezzoMin);
+                        if (searchParams.PrezzoMax != null)
+                            viaggiFound = viaggiFound.Where(v => v.PrezzoStandard <= searchParams.PrezzoMax);
+                        if (searchParams.PassaDa != null)
+                            viaggiFound = AddTappaSearchFilter(viaggiFound, searchParams.PassaDa, searchParams.PassaDaTipoSearch, TipoTappa.PICK_UP_POINT);
+                        if (searchParams.ArrivaA != null)
+                            viaggiFound = AddTappaSearchFilter(viaggiFound, searchParams.ArrivaA, searchParams.ArrivaATipoSearch, TipoTappa.DESTINAZIONE);
+                    }
+                    var result = viaggiFound.ToList();
+                    om.CommitOperation();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Errore nella ricerca viaggio");
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+
+        private IQueryable<Viaggio> AddTappaSearchFilter(IQueryable<Viaggio> viaggiToBeFiltered, GeoLocation locationFilter, TipoSearch tipoSearch, TipoTappa tipoTappa)
+        {
+            try
+            {
+                IQueryable<Viaggio> viaggiFiltered = null;
+
+                if (tipoSearch == null)
+                    tipoSearch = TipoSearch.Città;
+
+                switch (tipoSearch)
+                {
+                    case TipoSearch.Città:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.City != null && t.Tipo == tipoTappa && t.Location.City.Equals(locationFilter.City)));
+                        break;
+                    case TipoSearch.Provincia:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Province != null && t.Tipo == tipoTappa && t.Location.Province.Equals(locationFilter.Province)));
+                        break;
+                    case TipoSearch.Regione:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Region != null && t.Tipo == tipoTappa && t.Location.Region.Equals(locationFilter.Region)));
+                        break;
+                    case TipoSearch.Nazione:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Nation != null && t.Tipo == tipoTappa && t.Location.Nation.Equals(locationFilter.Nation)));
+                        break;
+                    default:
+                        throw new Exception("TipoSearch sconosciuto: " + Enum.GetName(typeof(TipoSearch), tipoSearch));
+
+                }
+
+
+                return viaggiFiltered;
+            }
+            catch (Exception ex)
+            {
+                string msg = String.Format("Errore nell'aggiunta del filtro per tappa/destinazione");
+                logger.ErrorException(msg, ex);
+                throw new Exception(msg, ex);
+            }
+        }
+
+    
+    
     }
 }

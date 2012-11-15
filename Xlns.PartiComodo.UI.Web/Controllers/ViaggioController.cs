@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Xlns.PartiComodo.Core.Repository;
 using Xlns.PartiComodo.Core.Model;
 using Xlns.PartiComodo.UI.Web.Controllers.Helper;
+using Xlns.PartiComodo.UI.Web.ViewModels;
+using Xlns.PartiComodo.UI.Web.Helpers;
 
 namespace Xlns.PartiComodo.UI.Web.Controllers
 {
@@ -24,7 +26,7 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             mlh.GetMailingList(model);
             return View(model);
         }
-        
+
         public ActionResult Details(int id)
         {
             var vr = new ViaggioRepository();
@@ -43,6 +45,21 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
         {
             var model = new Viaggio();
             return View(model);
+        }
+        
+        [ChildActionOnly]
+        public ActionResult Search(int idAgenzia, bool searchApproved, bool searchUnapproved, bool searchMine, bool searchTheirs, string ViewName)
+        {
+            return PartialView(new ViaggioSearchViewModel() { idAgenzia = idAgenzia, searchApproved = searchApproved,  searchUnapproved = searchUnapproved,  searchMine = searchMine,  searchTheirs = searchTheirs,  ViewName = ViewName});
+        }
+
+        public ActionResult SearchTappa(int tipo)
+        {
+            var tappaSearch = new Tappa()
+            {
+                Tipo = (TipoTappa)tipo,
+            };
+            return PartialView("SearchTappa", tappaSearch);
         }
 
         #region TO Actions
@@ -70,6 +87,16 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
         public ActionResult Save()
         {
             return RedirectToAction("ShowMine");
+        }
+
+        [HttpPost]
+        public ActionResult Search(ViaggioSearchViewModel searchParams)
+        {
+
+            var viaggiFound = new ViaggioRepository().Search(ViaggioHelper.getViaggioSearchParams(searchParams));
+
+            return View("List", viaggiFound);
+
         }
         #endregion
     }
