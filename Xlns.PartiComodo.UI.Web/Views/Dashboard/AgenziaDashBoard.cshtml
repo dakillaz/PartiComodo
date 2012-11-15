@@ -19,8 +19,10 @@
                 crearne di nuove o semplicemente cercare nuovi partner commerciali per la tua attività.</p>
             <address>
                 <strong>I miei dati: @Model.Nome</strong><br />
-                @Model.Location.City @Model.Location.CAP<br />
-                @Model.Location.Street, @Model.Location.Number<br />
+                @if (Model.Location != null) { 
+                    @Model.Location.City <span>  </span> @Model.Location.CAP<br />
+                    @Model.Location.Street <span>,</span> @Model.Location.Number<br />
+                }
                 <abbr title="Phone">
                     Telefono:</abbr>
                 @Model.Telefono

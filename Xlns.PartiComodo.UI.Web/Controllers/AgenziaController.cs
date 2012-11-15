@@ -44,7 +44,7 @@
         {
             if (ModelState.IsValid)
                 ar.Save(agenzia);
-            return Edit(agenzia.Id);
+            return RedirectToAction("Edit", new { id = agenzia.Id });
         }
         #endregion
     }
