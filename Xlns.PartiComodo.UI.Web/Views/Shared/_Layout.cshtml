@@ -38,6 +38,23 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li class="active">@Html.ActionLink("Homepage", "Index", "Homepage", null, null)</li>
+                         @if (Session.IsLogged())
+                         {
+                             if (Session.IsLoggedAsAdmin()){
+                                <li class="active">@Html.ActionLink("Dashboard", "AdminDashBoard", "Dashboard", null, null)</li>
+                             }
+                             else{
+                                //allora sono un'agenzia o un TourOperator
+                                 if (Session.GetLoggedAgenzia().IsTourOperator)
+                                 { 
+                                    <li class="active">@Html.ActionLink("Dashboard", "TourOperatorDashBoard", "Dashboard", new { id = Session.GetLoggedAgenzia().Id }, null)</li>
+                                 }
+                                 else { 
+                                    <li class="active">@Html.ActionLink("Dashboard", "AgenziaDashBoard", "Dashboard", new { id = Session.GetLoggedAgenzia().Id }, null)</li>
+                                 }
+
+                             }
+                         }
                         <li>@Html.ActionLink("Cerca un Viaggio", "List", "Viaggio", null, null)</li>
                         <li>@Html.ActionLink("I nostri Flyer", "ListPubblicati", "Flyer", null, null)</li>
                         @if (!Session.IsLogged())
