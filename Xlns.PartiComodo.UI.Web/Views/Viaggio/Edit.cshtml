@@ -1,5 +1,88 @@
-﻿@{
-    ViewBag.Title = "Edit";
-}
+﻿@model Xlns.PartiComodo.Core.Model.Viaggio
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+        $(".datepicker").datepicker("option", "dateFormat", "d MM, yy");
+    });
+	</script>
+<div class="row">
+    <div class="span8">
+        <h3>
+            NUOVO VIAGGIO</h3>
+        @using (Html.BeginForm("Save", "Viaggio", FormMethod.Post, new { id = "salvaViaggioForm", enctype = "multipart/form-data" }))
+        {   
+            @Html.HiddenFor(model => model.Agenzia.Id)    
+            @Html.HiddenFor(model => model.Agenzia.Nome)    
+            @Html.HiddenFor(model => model.Agenzia.Email)    
+            @Html.HiddenFor(model => model.Agenzia.Password)    
+            @Html.HiddenFor(model => model.Agenzia.RagioneSociale)    
+            @Html.HiddenFor(model => model.Agenzia.PIva)                     
+            <p>
+                @Html.LabelFor(model => model.Nome)
+            </p>
+            <p>
+                @Html.TextBoxFor(model => model.Nome)
+                @Html.ValidationMessageFor(model => model.Nome)
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Descrizione)
+            </p>
+            <p>
+                @Html.TextAreaFor(model => model.Descrizione, 3, 50, null)
+                @Html.ValidationMessageFor(model => model.Descrizione)
+            </p>
+            <p>
+                @Html.LabelFor(model => model.DataPartenza)
+            </p>
+            <p>
+                @Html.TextBox("DataPartenza", string.Format(ModelMetadata.FromLambdaExpression(m => m.DataPartenza, ViewData).DisplayFormatString, Model.DataPartenza), new { @class = "datepicker" })
+                @Html.ValidationMessageFor(model => model.DataPartenza)
+            </p>
+            <p>
+                @Html.LabelFor(model => model.DataChiusuraPrenotazioni)
+            </p>
+            <p>
+                @Html.TextBox("DataChiusuraPrenotazioni", string.Format(ModelMetadata.FromLambdaExpression(m => m.DataChiusuraPrenotazioni, ViewData).DisplayFormatString, Model.DataChiusuraPrenotazioni), new { @class = "datepicker" })
+                @Html.ValidationMessageFor(model => model.DataChiusuraPrenotazioni)
+            </p>
+            <p>
+                @Html.LabelFor(model => model.PrezzoStandard)
+            </p>
+            <p>
+                @Html.TextBoxFor(model => model.PrezzoStandard) €
+                @Html.ValidationMessageFor(model => model.PrezzoStandard)
+            </p>                            
+             
+            <p>
+                @Html.LabelFor(model => model.TotalePosti)
+            </p>
+            <p>
+                @Html.TextBoxFor(model => model.TotalePosti)
+                @Html.ValidationMessageFor(model => model.TotalePosti)
+            </p>
+            @Html.HiddenFor(model => model.Id)
+            <p>
+                <input type="submit" value="Salva" class="btn btn-primary btn-large" />
+            </p>
+        }
+    </div>
+    <div class="span4">
+        <h3>
+            QUI LA GOOGLE MAP</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="span4">
+        <h3>
+            ads 1</h3>
+    </div>
+    <div class="span4">
+        <h3>
+            ads 2</h3>
+    </div>
+    <div class="span4">
+        <h3>
+            ads 3</h3>
+    </div>
+</div>
 
-<h2>Edit</h2>

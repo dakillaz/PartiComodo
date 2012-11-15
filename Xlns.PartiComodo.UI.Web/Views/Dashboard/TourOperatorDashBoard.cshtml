@@ -5,7 +5,7 @@
             <h3>
                 Operazioni disponibili</h3>
             <ul class="nav nav-tabs nav-stacked">
-                <li>@Html.ActionLink("Crea una nuova Iniziativa", "Create", "Viaggio", null, null)</li>
+                <li>@Html.ActionLink("Crea una nuova Iniziativa", "Create", "Viaggio", new { id = @Model.Id }, null)</li>
                 <li>@Html.ActionLink("Visualizza tutte le Iniziative", "List", "Viaggio", null, null)</li>
                 <li>@Html.ActionLink("Visualizza le mie iniziative", "ListMine", "Viaggio", new { id = @Model.Id }, null)</li>
                 <li>@Html.ActionLink("Visualizza le mie iniziative in approvazione", "ListMineNotApproved", "Viaggio", new { id = @Model.Id }, null)</li>

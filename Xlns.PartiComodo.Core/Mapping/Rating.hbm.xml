@@ -1,0 +1,25 @@
+﻿<?xml version="1.0"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="Xlns.PartiComodo.Core.Model"
+                   assembly="Xlns.PartiComodo.Core" >
+
+  <class name="Rating" table="Rating">
+
+    <!-- Simple mappings -->
+    <id name="Id">     
+      <generator class="native" />
+    </id>
+    <property name="Commento" />
+    <property name="Voto" />
+    <property name="DataCommento" />
+
+    <many-to-one name="Viaggio"
+      class="Viaggio"
+      cascade="none" fetch="join"
+      lazy="false" />
+    
+  </class>
+
+</hibernate-mapping>
+
+

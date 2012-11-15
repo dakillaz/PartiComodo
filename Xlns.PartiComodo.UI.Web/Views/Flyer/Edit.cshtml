@@ -5,8 +5,7 @@
             Gestisci il tuo Flyer</h3>
         @using (Html.BeginForm("Save", "Flyer", FormMethod.Post))
         {
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.Agenzia.Id)
+            @Html.EditorFor(c => c.Id)
             @Html.HiddenFor(model => model.Viaggi)
             @Html.LabelFor(c => c.Titolo)
             @Html.EditorFor(c => c.Titolo)
@@ -19,7 +18,7 @@
                 @Html.LabelFor(c => c.IsPubblicato)
             </label>
             <p>
-                <input type="submit" value="Modifica il Flyer" class="btn btn-primary btn-large" />
+                <input type="submit" value="Salva il Flyer" class="btn btn-primary btn-large" />
                 @Html.ActionLink("Elimina il Flyer", "Delete", "Flyer", new { id = Model.Id }, new { @class = "btn btn-primary btn-large" })
             </p>
         }
@@ -33,6 +32,6 @@
             Sfoglia la lista dei viaggi, aggregali e crea la tua vetrina digitale.
         </p>
         <p>
-            <img src="@Url.Content("~/Content/images/poster_sanremo.jpg")" alt=""></p>
+            <img src="@Url.Content("~/Content/images/poster_sanremo.jpg")" alt="" class="img-polaroid"/></p>
     </div>
 </div>

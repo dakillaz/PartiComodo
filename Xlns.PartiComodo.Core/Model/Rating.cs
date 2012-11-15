@@ -23,5 +23,7 @@
         [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Inserito da")]
         public virtual string Agenzia { get; set; }
+
+        public virtual Viaggio Viaggio { get; set; }
     }
 }
