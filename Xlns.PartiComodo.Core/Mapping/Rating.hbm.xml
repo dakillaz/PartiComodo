@@ -11,7 +11,7 @@
     </id>
     <property name="Commento" />
     <property name="Voto" />
-    <property name="DataCommento" />
+    <property name="Data" column="DataCommento" />
 
     <many-to-one name="Viaggio"
       class="Viaggio"

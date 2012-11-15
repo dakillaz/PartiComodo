@@ -9,7 +9,7 @@
     using System.ComponentModel.DataAnnotations;
     #endregion
 
-    class Rating : ModelEntity
+    public class Rating : ModelEntity
     {
         [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Commento")]
@@ -23,6 +23,11 @@
         [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "Inserito da")]
         public virtual string Agenzia { get; set; }
+
+        [Required(ErrorMessage = "Campo obbligatorio")]
+        [Display(Name = "Voto")]
+        [Range(0, 10, ErrorMessage = "Valore intero compreso tra 0 e 10")]
+        public virtual int Voto { get; set; }
 
         public virtual Viaggio Viaggio { get; set; }
     }
