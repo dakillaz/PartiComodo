@@ -1,0 +1,72 @@
+﻿@model Xlns.PartiComodo.Core.Model.Viaggio
+@{
+    var destinazione = Model.Tappe
+                    .Where(t => t.Tipo == Xlns.PartiComodo.Core.Model.TipoTappa.DESTINAZIONE)
+                    .FirstOrDefault();
+    var pickupPoints = Model.Tappe
+                .Where(t => t.Tipo == Xlns.PartiComodo.Core.Model.TipoTappa.PICK_UP_POINT)
+                .ToList();    
+    <ul id="sortableTappe" style="list-style-type: none; margin: 0px 0px 10px 0px; padding: 0px;">
+        @foreach (var t in pickupPoints) {
+        <li data-tappa-id="@t.Id">
+            <div class="tappaDiv">
+                <a href="#" class="ui-icon ui-icon-closethick" data-delete-command="@t.Id" style="vertical-align: bottom">
+                    </a> <a href="#" onclick="modificaTappa(@t.Id)" >@t.Location.City (@t.Location.Province)
+                    - @t.Location.Nation</a> 
+            </div>
+        </li>
+        }
+    </ul>                
+    <a href="#" onclick="aggiungiTappa(2)" class="read-more">Aggiungi punto di raccolta</a>                            
+    <br />    
+    <br />
+    if (destinazione == null)
+    {
+    <a href="#" onclick="aggiungiTappa(3)" class="butread-moreton">Definisci destinazione</a>
+    }
+    else
+    {        
+    <a href="#" onclick="modificaTappa(@destinazione.Id)" >@destinazione.Location.City (@destinazione.Location.Province)
+        - @destinazione.Location.Nation</a>
+    }        
+}
+<script type="text/javascript">
+
+    $(function () {
+        $("#sortableTappe").sortable({
+            revert: false, // in questo modo non si attiva il link durante il riordinamento            
+            update: function (event, ui) {
+                var orderedTappeIds = new Array();
+                $("#sortableTappe li").each(function () {
+                    orderedTappeIds.push($(this).attr('data-tappa-id'));
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ReorderTappe", "Viaggio")',
+                    data: { reorderedIds: orderedTappeIds, idViaggio: '@Model.Id' },
+                    traditional: true,
+                    dataType: "json",
+                    error: function () { alert("Le modifiche all'ordinamento non sono state registrate per porblemi sul server"); }
+                });
+            }
+        });
+        $('[data-delete-command]').each(function () {
+            var target = $(this);
+            var idTappa = target.attr('data-delete-command');
+            target.click(function (e) {
+                $.ajax({
+                    url: "/Viaggio/DeleteTappaAjax/" + idTappa,
+                    cache: false,
+                    context: target,
+                    type: "POST",
+                    success: function (data) {
+                        $(this).parents('.tappaDiv').hide('slow');
+                        $(this).parents('.tappaDiv').parents('li').remove();
+                    },
+                    error: function () { alert("Impossibile eliminare il punto di raccolta"); }
+                });
+                return false;
+            });
+        });
+    });
+</script>

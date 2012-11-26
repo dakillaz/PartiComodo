@@ -1,12 +1,14 @@
-﻿@model Xlns.PartiComodo.Core.Model.Viaggio
+﻿@using Xlns.PartiComodo.UI.Web.Models;
+@model Xlns.PartiComodo.Core.Model.Viaggio
 <script>
     $(function () {
         $(".datepicker").datepicker();
         $(".datepicker").datepicker("option", "dateFormat", "d MM, yy");
     });
 	</script>
+     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <div class="row">
-    <div class="span8">
+    <div class="span4">
         <h3>
             NUOVO VIAGGIO</h3>
         @using (Html.BeginForm("Save", "Viaggio", FormMethod.Post, new { id = "salvaViaggioForm", enctype = "multipart/form-data" }))
@@ -66,9 +68,74 @@
             </p>
         }
     </div>
-    <div class="span4">
+    <div class="span8">
         <h3>
             QUI LA GOOGLE MAP</h3>
+            <div style="padding-left: 50px">
+                    @if (Model.Id != 0)
+                    {
+                        <div id="ListaTappeEditabili">
+                            @{Html.RenderAction("EditTappeViaggio", new { idViaggio = Model.Id });}
+                        </div>
+                        <div id="EditTappaDialog" style="display: none">
+                        </div>
+                        <script type="text/javascript">
+                            var tappaDialog;
+
+                            function ShowLoadingElement() {
+                                $('#ListaTappeEditabili').html('<img alt="loading" src="@Url.Content("~/Content/img/loading.gif")" width="24px" height="24px"/>');
+                            }
+
+                            function CloseDialog() {
+                                tappaDialog.dialog("close");
+                            }
+
+                            $(function () {
+                                tappaDialog = $('#EditTappaDialog');
+                                tappaDialog.dialog(
+                                {
+                                    modal: true,
+                                    autoOpen: false,
+                                    width: '800',
+                                    resizable: false
+                                });
+                            });
+                            function aggiungiTappa(tipoTappa) {
+                                $.ajax({
+                                    url: '@Url.Action("CreateTappa")' + "?tipo=" + tipoTappa + "&idViaggio=@Model.Id",
+                                    cache: false,
+                                    success: function (result) {
+                                        tappaDialog.html(result);                                        
+                                        $('#submitButton').show();
+                                        tappaDialog.dialog("open");
+                                        initializeMap();
+                                        showLocation("Italia", true);
+                                    },
+                                    error: function () {
+                                        tappaDialog.html("Impossibile recuperare l'editor delle tappe");
+                                        $('#submitButton').hide();
+                                    }
+                                });
+                            }
+
+                            function modificaTappa(idTappa) {
+                                $.ajax({
+                                    url: '@Url.Action("EditTappa")' + "?id=" + idTappa,
+                                    cache: false,
+                                    success: function (result) {
+                                        tappaDialog.html(result);
+                                        $('#submitButton').show();
+                                        tappaDialog.dialog("open");
+                                    },
+                                    failure: function () {
+                                        tappaDialog.html("Impossibile recuperare l'editor delle tappe");
+                                        $('#submitButton').hide();
+                                    }
+                                });
+                            }
+                        </script>
+                    }
+                </div>
     </div>
 </div>
 <div class="row">

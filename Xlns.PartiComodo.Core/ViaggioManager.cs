@@ -1,0 +1,460 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Xlns.PartiComodo.Core.Repository;
+using Xlns.PartiComodo.Core.Model;
+using Xlns.PartiComodo.Core.DAL;
+using NHibernate.Linq;
+using Xlns.PartiComodo.ConfigurationManager;
+
+namespace Xlns.PartiComodo.Core
+{
+    public class ViaggioManager
+    {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private ViaggioRepository vr = new ViaggioRepository();
+        
+        public int CalcolaOrdinamentoPerNuovaTappa(Viaggio viaggio)
+        {
+            logger.Debug("Calcolo ordiamento nuova tappa per viaggio {0}", viaggio.Id);
+            var tappe = viaggio.Tappe.Where(t => t.Tipo != TipoTappa.DESTINAZIONE);
+            if (tappe != null && tappe.Count() > 0)
+            {
+                int result = tappe.Max(t => t.Ordinamento) + 1;
+                logger.Debug("Tappe precedenti trovate, ordinamento nuova tappa = {0}", result);
+                return result;
+            }
+            else
+            {
+                logger.Debug("Nessuna tappa trovata, ordinamento nuova tappa = 1");
+                return 1;
+            }
+        }
+
+        
+        public Viaggio CreaNuovoViaggio()
+        {
+            var viaggio = new Viaggio()
+            {
+                DataPartenza = DateTime.Today.AddDays(1),
+                DataChiusuraPrenotazioni = DateTime.Today
+            };
+            return viaggio;
+        }
+
+        public IList<Viaggio> GetProposteAgenzia(Agenzia agenzia)
+        {
+            var ar = new AgenziaRepository();
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    logger.Info("Recupero dei viaggi proposti dall'agenzia {0}", agenzia);
+                    var viaggi = session.Query<Viaggio>()
+                                    .Where(v => v.Agenzia.Id == agenzia.Id)
+                                    .ToList();
+                    logger.Debug("Viaggi proposti: {0}", viaggi.Count);
+                    om.CommitOperation();
+                    return viaggi;
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Impossibile recuperare i viaggi proposti dall'agenzia {0}", agenzia);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+
+        /*
+        public Viaggio GetViaggioByDepliant(int idDepliant)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var viaggio = session.Query<Viaggio>()
+                                    .Where(v => v.Depliant.Id == idDepliant)
+                                    .Single();
+                    om.CommitOperation();
+                    logger.Debug("Il depliant {0} si riferisce al viaggio {1}", idDepliant, viaggio);
+                    return viaggio;
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Impossibile recuperare il viaggio a cui è associato il depliant {0}", idDepliant);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+        */
+
+        /*
+        public Viaggio GetViaggioByPromoImage(int idPromoImage)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var viaggio = session.Query<Viaggio>()
+                                    .Where(v => v.PromoImage.Id == idPromoImage)
+                                    .Single();
+                    om.CommitOperation();
+                    logger.Debug("L'immagine promozionale {0} si riferisce al viaggio {1}", idPromoImage, viaggio);
+                    return viaggio;
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Impossibile recuperare il viaggio a cui è associata l'immagine promozionale {0}", idPromoImage);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+        */
+
+        /*
+        public void Save(Viaggio viaggio)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    vr.Save(viaggio);
+                    // serve per valorizzare gli ID generati dal DB
+                    session.Flush();
+                    if (viaggio.Depliant != null && viaggio.Depliant.RawFile != null)
+                    {
+                        SaveDepliant(viaggio);
+                    }
+                    if (viaggio.PromoImage != null && viaggio.PromoImage.RawFile != null)
+                    {
+                        SavePromoImage(viaggio);
+                    }
+                    om.CommitOperation();
+                    logger.Info("Dati del viaggio {0} salvati con successo", viaggio);
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Errore nel salvataggio del viaggio {0}", viaggio);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+        */
+
+        /*
+        private void SaveDepliant(Viaggio viaggio)
+        {
+            if (viaggio.Depliant.Id != 0 && viaggio.Agenzia.Id != 0)
+            {
+                SaveAllegato(viaggio.Depliant, () => { return getDepliantFolder(viaggio.Agenzia); });
+            }
+            else
+            {
+                string msg = string.Format("Impossibile salvare il depliant del viaggio {0} in quanto il viaggio non è ancora stato salvato o non è associato ad un'agenzia.", viaggio);
+                logger.Warn(msg);
+                throw new Exception(msg);
+            }
+        }
+        */
+
+        /*
+        private void SavePromoImage(Viaggio viaggio)
+        {
+            if (viaggio.PromoImage.Id != 0 && viaggio.Agenzia.Id != 0)
+            {
+                SaveAllegato(viaggio.PromoImage, () => { return getPromoImageFolder(viaggio.Agenzia); });
+            }
+            else
+            {
+                string msg = string.Format("Impossibile salvare l'immagine promozionale del viaggio {0} in quanto il viaggio non è ancora stato salvato o non è associato ad un'agenzia.", viaggio);
+                logger.Warn(msg);
+                throw new Exception(msg);
+            }
+        }
+        */
+
+        /*
+        private void SaveAllegato(AllegatoViaggio allegato, Func<string> getFolder)
+        {
+            string fileName = String.Format("{0}.{1}", allegato.Id, allegato.NomeFile);
+            logger.Debug("Nome con cui verrà salvato l'allegato: {0}", fileName);
+            string fullPath = getFolder();
+            logger.Debug("Il file verrà salvato in {0}", fullPath);
+            string fullPathFileName = System.IO.Path.Combine(fullPath, fileName);
+            System.IO.File.WriteAllBytes(fullPathFileName, allegato.RawFile);
+            logger.Info("Allegato salvato in {0}", fullPathFileName);
+            allegato.FullName = fullPathFileName;
+        }
+
+        internal string getDepliantFolder(Agenzia agenzia)
+        {
+            return getAllegatoFolder(agenzia.Id, Configurator.Istance.depliantFolder);
+        }
+
+        internal string getPromoImageFolder(Agenzia agenzia)
+        {
+            return getAllegatoFolder(agenzia.Id, Configurator.Istance.promoImageFolder);
+        }
+
+        private string getAllegatoFolder(int idAgenzia, string baseTypeFolder)
+        {
+            var fullPath = System.IO.Path.Combine(Configurator.Istance.rootFolder,
+                                           Configurator.Istance.companyIdPrefix + idAgenzia.ToString(),
+                                           baseTypeFolder);
+            if (!System.IO.Directory.Exists(fullPath))
+            {
+                logger.Debug("La directory {0} non esiste, quindi verrà creata", fullPath);
+                createFolder(fullPath);
+            }
+            return fullPath;
+        }
+        */
+
+        private void createFolder(string fullPath)
+        {
+            System.IO.Directory.CreateDirectory(fullPath);
+            /*
+            if (!Configurator.Istance.isRootFolderRelative)
+            {
+                // assegnazione permessi di scrittura per l'utente corrente
+                var user = System.Security.Principal.WindowsIdentity.GetCurrent().User;
+                var userName = user.Translate(typeof(System.Security.Principal.NTAccount));
+                var dirInfo = new System.IO.DirectoryInfo(fullPath);
+                var sec = dirInfo.GetAccessControl();
+                sec.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(userName,
+                    System.Security.AccessControl.FileSystemRights.Modify,
+                    System.Security.AccessControl.AccessControlType.Allow)
+                    );
+                dirInfo.SetAccessControl(sec);
+            }
+            */
+            logger.Info("Directory {0} creata con successo", fullPath);
+        }
+
+        /*
+        public void DeleteDepliant(int idDepliant)
+        {
+            logger.Debug("Richiesta di eliminazione del depliant {0}", idDepliant);
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var viaggio = GetViaggioByDepliant(idDepliant);
+                    logger.Debug("Il viaggio da cui il depliant {0} sarà rimosso è {1}", idDepliant, viaggio);
+                    var depliant = viaggio.Depliant;
+                    viaggio.Depliant = null;
+                    DeleteAllegato(viaggio, depliant);
+                    om.CommitOperation();
+                    logger.Info("Il depliant {0} relativo al viaggio {1} è stato eliminato", idDepliant, viaggio);
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Impossibile eliminare il depliant {0}", idDepliant);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+
+        }
+
+        private void DeleteAllegato(Viaggio viaggio, AllegatoViaggio targetAllegato)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var fullImgPath = targetAllegato.FullName;
+                    System.IO.File.Delete(fullImgPath);
+                    vr.Save(viaggio);
+                    vr.deleteAllegato(targetAllegato);
+                    om.CommitOperation();
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Impossibile eliminare l'allegato {0}", targetAllegato.Id);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+
+        public void DeletePromoImage(int idPromoImage)
+        {
+            logger.Debug("Richiesta di eliminazione dell'immagine promozionale {0}", idPromoImage);
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var viaggio = GetViaggioByPromoImage(idPromoImage);
+                    logger.Debug("Il viaggio da cui l'immagine promozionale {0} sarà rimossa è {1}", idPromoImage, viaggio);
+                    var promoImg = viaggio.PromoImage;
+                    viaggio.PromoImage = null;
+                    DeleteAllegato(viaggio, promoImg);
+                    om.CommitOperation();
+                    logger.Info("L'immagine promozionale {0} relativa al viaggio {1} è stata eliminato", idPromoImage, viaggio);
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Impossibile eliminare l'immagine promozionale {0}", idPromoImage);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+
+        }
+
+        public Boolean isValidDepliantMimeType(string fileName)
+        {
+            var result = false;
+            result = (fileName.ToLower().EndsWith(".pdf")) || (fileName.ToLower().EndsWith(".doc"));
+            logger.Debug("Il file {0} non è stato ritenuto valido come depliant", fileName);
+            return result;
+        }
+
+        public bool isValidImageMimeType(string fileName)
+        {
+            var result = false;
+            result = (fileName.ToLower().EndsWith(".gif"))
+                    || (fileName.ToLower().EndsWith(".jpg"))
+                    || (fileName.ToLower().EndsWith(".png"));
+            logger.Debug("Il file {0} non è stato ritenuto valido come immagine", fileName);
+            return result;
+        }
+        */
+
+        public List<Viaggio> Search(ViaggioSearch searchParams, Agenzia agenzia)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var viaggiFound = vr.GetViaggiVisibili(agenzia);
+
+                    if (searchParams != null)
+                    {
+                        if (searchParams.onlyPubblicati)
+                            viaggiFound = viaggiFound.Where(v => v.DataPubblicazione != null);
+                        if (!String.IsNullOrEmpty(searchParams.SearchString))
+                            viaggiFound = viaggiFound.Where(v => v.Nome.ToUpper().StartsWith(searchParams.SearchString.ToUpper()));
+                        if (searchParams.DataPartenzaMin != null)
+                            viaggiFound = viaggiFound.Where(v => v.DataPartenza >= searchParams.DataPartenzaMin);
+                        if (searchParams.DataPartenzaMax != null)
+                            viaggiFound = viaggiFound.Where(v => v.DataPartenza <= searchParams.DataPartenzaMax);
+                        if (searchParams.PrezzoMin != null)
+                            viaggiFound = viaggiFound.Where(v => v.PrezzoStandard >= searchParams.PrezzoMin);
+                        if (searchParams.PrezzoMax != null)
+                            viaggiFound = viaggiFound.Where(v => v.PrezzoStandard <= searchParams.PrezzoMax);
+                        if (searchParams.PassaDa != null)
+                            viaggiFound = AddTappaSearchFilter(viaggiFound, searchParams.PassaDa, searchParams.PassaDaTipoSearch, TipoTappa.PICK_UP_POINT);
+                        if (searchParams.ArrivaA != null)
+                            viaggiFound = AddTappaSearchFilter(viaggiFound, searchParams.ArrivaA, searchParams.ArrivaATipoSearch, TipoTappa.DESTINAZIONE);
+                    }
+                    var result = viaggiFound.ToList();
+                    om.CommitOperation();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Errore nella ricerca viaggio");
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+
+        private IQueryable<Viaggio> AddTappaSearchFilter(IQueryable<Viaggio> viaggiToBeFiltered, GeoLocation locationFilter, TipoSearch tipoSearch, TipoTappa tipoTappa)
+        {
+            try
+            {
+                IQueryable<Viaggio> viaggiFiltered = null;
+
+                if (tipoSearch == null)
+                    tipoSearch = TipoSearch.Città;
+
+                switch (tipoSearch)
+                {
+                    case TipoSearch.Città:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.City != null && t.Tipo == tipoTappa && t.Location.City.Equals(locationFilter.City)));
+                        break;
+                    case TipoSearch.Provincia:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Province != null && t.Tipo == tipoTappa && t.Location.Province.Equals(locationFilter.Province)));
+                        break;
+                    case TipoSearch.Regione:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Region != null && t.Tipo == tipoTappa && t.Location.Region.Equals(locationFilter.Region)));
+                        break;
+                    case TipoSearch.Nazione:
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Nation != null && t.Tipo == tipoTappa && t.Location.Nation.Equals(locationFilter.Nation)));
+                        break;
+                    default:
+                        throw new Exception("TipoSearch sconosciuto: " + Enum.GetName(typeof(TipoSearch), tipoSearch));
+
+                }
+
+
+                return viaggiFiltered;
+            }
+            catch (Exception ex)
+            {
+                string msg = String.Format("Errore nell'aggiunta del filtro per tappa/destinazione");
+                logger.ErrorException(msg, ex);
+                throw new Exception(msg, ex);
+            }
+        }
+
+        public void DeleteTappa(int idTappa)
+        {
+            using (var om = new OperationManager())
+            {
+                try
+                {
+                    var session = om.BeginOperation();
+                    var tappa = vr.GetTappaById(idTappa);
+                    var viaggio = tappa.Viaggio;
+                    viaggio.Tappe.Remove(tappa);
+                    vr.deleteTappa(tappa);
+                    Reorder(viaggio.Tappe);
+                    vr.Save(viaggio);
+                    om.CommitOperation();
+                }
+                catch (Exception ex)
+                {
+                    om.RollbackOperation();
+                    string msg = String.Format("Errore durante l'eliminazione della tappa {0}", idTappa);
+                    logger.ErrorException(msg, ex);
+                    throw new Exception(msg, ex);
+                }
+            }
+        }
+
+        private void Reorder(IList<Tappa> Tappe)
+        {
+            int order = 1;
+            foreach (var t in Tappe.OrderBy(t => t.Ordinamento))
+            {
+                t.Ordinamento = order;
+                order++;
+            }
+        }
+    }
+}

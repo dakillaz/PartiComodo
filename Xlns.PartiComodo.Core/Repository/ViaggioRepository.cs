@@ -28,7 +28,7 @@
                 catch (Exception ex)
                 {
                     om.RollbackOperation();
-                    string msg = String.Format("Error {0}", null);
+                    string msg = String.Format("Errore durante il recupero dei viaggi non approvati");
                     logger.ErrorException(msg, ex);
                     throw new Exception(msg, ex);
                 }
@@ -102,7 +102,7 @@
                 catch (Exception ex)
                 {
                     om.RollbackOperation();
-                    string msg = String.Format("Error {0}", null);
+                    string msg = String.Format("Errore durante il recupero dei viaggi dell'agenzia {0}", agenzia.ToString());
                     logger.ErrorException(msg, ex);
                     throw new Exception(msg, ex);
                 }
@@ -123,7 +123,7 @@
                 catch (Exception ex)
                 {
                     om.RollbackOperation();
-                    string msg = String.Format("Error {0}", null);
+                    string msg = String.Format("Errore durante il recupero dei viaggi visibili dell'agenzia {0}", agenzia.ToString());
                     logger.ErrorException(msg, ex);
                     throw new Exception(msg, ex);
                 }
@@ -202,7 +202,7 @@
                 catch (Exception ex)
                 {
                     om.RollbackOperation();
-                    string msg = String.Format("Error {0}", null);
+                    string msg = String.Format("Errore durante il recupero dei viaggi approvati");
                     logger.ErrorException(msg, ex);
                     throw new Exception(msg, ex);
                 }

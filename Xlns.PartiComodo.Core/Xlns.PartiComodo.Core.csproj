@@ -73,15 +73,12 @@
     <Compile Include="Repository\FlyerRepository.cs" />
     <Compile Include="Repository\GestoreRepository.cs" />
     <Compile Include="Repository\ViaggioRepository.cs" />
+    <Compile Include="ViaggioManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BusBook\Xlns.ConfigurationManager\Xlns.ConfigurationManager.csproj">
+    <ProjectReference Include="..\Xlns.ConfigurationManager\Xlns.ConfigurationManager.csproj">
       <Project>{DEA9D5A7-9ED6-4B73-A56D-316AF4FDCF0C}</Project>
       <Name>Xlns.ConfigurationManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BusBook\Xlns.Google.Maps\Xlns.Google.Maps.csproj">
-      <Project>{8E19CFCF-1A43-44FA-9E38-3A4A25C2187D}</Project>
-      <Name>Xlns.Google.Maps</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xlns.PartiComodo.ConfigurationManager\Xlns.PartiComodo.ConfigurationManager.csproj">
       <Project>{AD9833B7-FDC7-427F-8B2E-FD45DD9EEF35}</Project>

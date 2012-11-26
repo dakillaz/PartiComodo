@@ -1,0 +1,64 @@
+﻿@using Xlns.PartiComodo.UI.Web.Models;
+@model Xlns.PartiComodo.Core.Model.Tappa
+@{
+    String title = "Definizione punto di raccolta";
+    if (Model.Tipo == Xlns.PartiComodo.Core.Model.TipoTappa.DESTINAZIONE)
+    {
+        title = "Qual'è la destinazione?";
+    }    
+}
+<style type="text/css">
+    #dialogTitle
+    {
+        padding-top: 0px;
+        line-height: normal;
+    }
+    #salvaTappaForm
+    {
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+</style>
+<h3 id="dialogTitle">@title</h3>
+@using (Ajax.BeginForm("SaveTappa", "Viaggio",
+                                            new AjaxOptions()
+                                            {
+                                                HttpMethod = "POST",
+                                                InsertionMode = InsertionMode.Replace,
+                                                UpdateTargetId = "ListaTappeEditabili",
+                                                OnBegin = "ShowLoadingElement",
+                                                OnSuccess = "CloseDialog"
+                                            },
+                                            new { id = "salvaTappaForm" }))
+{
+    <div style="width: 100%; margin-bottom: 20px">
+        @{Html.RenderAction("Edit", "Location", new
+                                          {
+                                              locationPartialView = new LocationPartialView()
+                                              {
+                                                  Location = Model.Location,
+                                                  //CssStyleForDataFieldDiv = "display: table-cell; padding-right: 20px",
+                                                  MapHeight = "300px",
+                                                  MapWidth = "100%",
+                                                  CssStyleForMapDiv = "width: 100%",
+                                                  MapJsAlreadyLoaded = true
+                                              }
+                                          });
+        }
+    </div>
+    @Html.HiddenFor(m => m.IdTipo)
+    @Html.HiddenFor(m => m.Viaggio.Id)  
+    @Html.HiddenFor(m => m.Ordinamento)  
+    <input type="button" value="Salva" id="submitButton" class="read-more" />
+    <script type="text/javascript">
+        $(function () {
+            $('#submitButton').click(function (evt) {
+                evt.preventDefault();
+                var $form = $('#salvaTappaForm');
+                if ($form.valid()) {
+                    $form.submit();
+                }
+            });
+        });
+    </script>
+}

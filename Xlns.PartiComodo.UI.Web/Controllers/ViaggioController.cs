@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Xlns.PartiComodo.Core.Repository;
 using Xlns.PartiComodo.Core.Model;
 using Xlns.PartiComodo.UI.Web.Controllers.Helper;
+using Xlns.PartiComodo.Core;
 
 namespace Xlns.PartiComodo.UI.Web.Controllers
 {
@@ -13,7 +14,7 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
     {
 
         ViaggioRepository vr = new ViaggioRepository();
-
+        private ViaggioManager vm = new ViaggioManager();
 
         public ActionResult Index()
         {
@@ -109,6 +110,40 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             }
             return View("Edit", model);
         }
+
+        [HttpPost]
+        public ActionResult SaveTappa(Tappa tappa)
+        {
+            if (tappa.Viaggio != null && tappa.Viaggio.Id != 0)
+            {
+                tappa.Viaggio = vr.GetById(tappa.Viaggio.Id);
+            }
+            if (!ModelState.IsValid)
+            {
+                vr.Save(tappa);
+                return RedirectToAction("EditTappeViaggio", new { idViaggio = tappa.Viaggio.Id });
+            }
+            else
+            {
+                string msg = "Impossibile salvare la tappa modificata o creata";
+                throw new Exception(msg);
+            }
+        }
+
+        [HttpPost]
+        public void DeleteTappaAjax(int id)
+        {
+            try
+            {
+                vm.DeleteTappa(id);
+            }
+            catch (Exception ex)
+            {
+                string msg = String.Format("Errore durante l'eliminazione della tappa con id={0}", id);
+                throw new Exception(msg);
+            }
+        }
+
         #endregion
 
         private int CalcolaOrdinamentoPerNuovaTappa(Viaggio viaggio)

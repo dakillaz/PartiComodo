@@ -39,7 +39,7 @@
       <one-to-many class="Tappa" />
     </bag>
 
-    <bag name="Rating" cascade="all" inverse="true" lazy="false" order-by="Ordinamento asc">
+    <bag name="Rating" cascade="all" inverse="true" lazy="false" >
       <key column="Viaggio" on-delete="cascade" />
       <one-to-many class="Rating" />
     </bag>
