@@ -168,7 +168,7 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
 
             var viaggiFound = new ViaggioRepository().Search(ViaggioHelper.getViaggioSearchParams(searchParams));
 
-            return View("List", viaggiFound);
+            return View(searchParams.ViewName, viaggiFound);
 
         }
         #endregion
