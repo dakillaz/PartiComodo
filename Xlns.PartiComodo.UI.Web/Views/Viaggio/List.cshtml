@@ -1,5 +1,5 @@
 ﻿@model List<Xlns.PartiComodo.Core.Model.Viaggio>
-@if(!IsPost)
+@if (!IsPost)
 {
     Html.RenderAction("Search", "Viaggio", new { idAgenzia = 0, searchApproved = true, searchUnapproved = false, searchMine = true, searchTheirs = true, ViewName = "List" });
 }

@@ -108,9 +108,9 @@ function addSearchTappa(updateId) {
    var region = $('#Location_Region').val();
    var street = $('#Location_Street').val();
 
-//   alert(city + "|" + nation + "|" + province + "|" + region);
+    //alert(city + "|" + nation + "|" + province + "|" + region);
 
-   if(city !="" && nation != "" && province != "" && region != ""){
+   if(nation != "" && province != "" && region != ""){
        $('#' + updateId  + 'CAP').val(cap);
        $('#' + updateId + 'City').val(city);
        $('#' + updateId + 'Lat').val(lat);

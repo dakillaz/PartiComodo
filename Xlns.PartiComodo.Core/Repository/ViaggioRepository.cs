@@ -299,16 +299,16 @@
                 switch (tipoSearch)
                 {
                     case TipoSearch.Città:
-                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.City != null && t.Tipo == tipoTappa && t.Location.City.Equals(locationFilter.City)));
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t.IdTipo == (int)tipoTappa && t.Location.City.Equals(locationFilter.City)));
                         break;
                     case TipoSearch.Provincia:
-                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Province != null && t.Tipo == tipoTappa && t.Location.Province.Equals(locationFilter.Province)));
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t.IdTipo == (int)tipoTappa && t.Location.Province.Equals(locationFilter.Province)));
                         break;
                     case TipoSearch.Regione:
-                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Region != null && t.Tipo == tipoTappa && t.Location.Region.Equals(locationFilter.Region)));
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t.IdTipo == (int)tipoTappa && t.Location.Region.Equals(locationFilter.Region)));
                         break;
                     case TipoSearch.Nazione:
-                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t != null && t.Location != null && t.Location.Nation != null && t.Tipo == tipoTappa && t.Location.Nation.Equals(locationFilter.Nation)));
+                        viaggiFiltered = viaggiToBeFiltered.Where(v => v.Tappe.Any(t => t.IdTipo == (int)tipoTappa && t.Location.Nation.Equals(locationFilter.Nation)));
                         break;
                     default:
                         throw new Exception("TipoSearch sconosciuto: " + Enum.GetName(typeof(TipoSearch), tipoSearch));
