@@ -7,6 +7,8 @@ using Xlns.PartiComodo.Core.Repository;
 using Xlns.PartiComodo.Core.Model;
 using Xlns.PartiComodo.UI.Web.Controllers.Helper;
 using Xlns.PartiComodo.Core;
+using Xlns.PartiComodo.UI.Web.ViewModels;
+using Xlns.PartiComodo.UI.Web.Helpers;
 
 namespace Xlns.PartiComodo.UI.Web.Controllers
 {
@@ -56,6 +58,12 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             vr.Save(model);
             return RedirectToAction("Edit", new { id = model.Id });
         }
+        
+        [ChildActionOnly]
+        public ActionResult Search(int idAgenzia, bool searchApproved, bool searchUnapproved, bool searchMine, bool searchTheirs, string ViewName)
+        {
+            return PartialView(new ViaggioSearchViewModel() { idAgenzia = idAgenzia, searchApproved = searchApproved,  searchUnapproved = searchUnapproved,  searchMine = searchMine,  searchTheirs = searchTheirs,  ViewName = ViewName});
+        }
 
         public ActionResult CreateTappa(int tipo, int idViaggio)
         {
@@ -79,6 +87,15 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
         {
             var viaggio = vr.GetById(idViaggio);
             return PartialView(viaggio);
+        }
+
+        public ActionResult SearchTappa(int tipo)
+        {
+            var tappaSearch = new Tappa()
+            {
+                Tipo = (TipoTappa)tipo,
+            };
+            return PartialView("SearchTappa", tappaSearch);
         }
 
         #region TO Actions
@@ -144,6 +161,16 @@ namespace Xlns.PartiComodo.UI.Web.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult Search(ViaggioSearchViewModel searchParams)
+        {
+
+            var viaggiFound = new ViaggioRepository().Search(ViaggioHelper.getViaggioSearchParams(searchParams));
+
+            return View("List", viaggiFound);
+
+        }
         #endregion
 
         private int CalcolaOrdinamentoPerNuovaTappa(Viaggio viaggio)
