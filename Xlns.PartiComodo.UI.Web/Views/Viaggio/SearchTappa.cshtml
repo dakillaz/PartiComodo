@@ -41,4 +41,12 @@
     @Html.HiddenFor(m => m.IdTipo)
     @Html.HiddenFor(m => m.Viaggio.Id)  
     @Html.HiddenFor(m => m.Ordinamento)  
-    <a href="#" onclick="addSearchTappa('@updateId')" class="read-more">Salva</a>
+    <input type="button" value="Salva" id="submitButton" class="btn btn-primary" />
+    <script type="text/javascript">
+        $(function () {
+            $('#submitButton').click(function (evt) {
+                evt.preventDefault();
+                addSearchTappa('@updateId');
+            });
+        });
+    </script>
